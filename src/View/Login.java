@@ -5,19 +5,22 @@
  */
 package View;
 
+import Controller.LoginController;
 import View.Dashboard;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author CASA
  */
 public class Login extends javax.swing.JFrame {
-
+    private final  LoginController Controller;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        Controller = new LoginController(this);
     }
 
     /**
@@ -110,6 +113,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
+        Controller.Mensagem();
         Dashboard dash = new Dashboard();
         dash.setVisible(true);
         this.setVisible(false);
@@ -158,4 +162,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public void mensagem(String teste) {
+        JOptionPane.showMessageDialog(null,teste);
+    }
 }

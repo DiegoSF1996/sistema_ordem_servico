@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Models;
+package Model;
 
 /**
  *
  * @author CASA
  */
-public class ServicoModel {
-    private int ser_codigo;
-    private String ser_descricao;
+public class UsuarioModel {
+    
 }

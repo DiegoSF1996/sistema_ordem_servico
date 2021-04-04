@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/cad_tipo_servico.java</file>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/cad_cliente.java</file>
+            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/Model/TipoPagamentoModel.java</file>
+            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/Model/UsuarioModel.java</file>
+            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/Controller/TipoPagamentoController.java</file>
+            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/cons_tipo_pagamento.java</file>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/Login.java</file>
+            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/classes/TipoPagamentoClass.java</file>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/cad_servico.java</file>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/Dashboard.java</file>
-            <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/Models/ServicoModel.java</file>
             <file>file:/C:/Users/CASA/Documents/NetBeansProjects/ordem_de_servico/src/View/cad_tipo_pagamento.java</file>
         </group>
     </open-files>
