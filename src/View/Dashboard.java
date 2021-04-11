@@ -33,7 +33,6 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuServico = new javax.swing.JMenu();
         MenuNovoServico = new javax.swing.JMenuItem();
@@ -43,23 +42,13 @@ public class Dashboard extends javax.swing.JFrame {
         MenuClientes = new javax.swing.JMenuItem();
         MenuTipoServico = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("DASHBOARD");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
-            }
-        });
-
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
             }
         });
 
@@ -94,6 +83,11 @@ public class Dashboard extends javax.swing.JFrame {
         MenuAdministrativo.setText("ADMINISTRATIVO");
 
         MenuClientes.setText("CLIENTES");
+        MenuClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuClientesActionPerformed(evt);
+            }
+        });
         MenuAdministrativo.add(MenuClientes);
 
         MenuTipoServico.setText("TIPOS DE SERVIÇOS");
@@ -112,6 +106,14 @@ public class Dashboard extends javax.swing.JFrame {
         });
         MenuAdministrativo.add(jMenuItem1);
 
+        jMenuItem2.setText("TIPO DE PRODUTO");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        MenuAdministrativo.add(jMenuItem2);
+
         jMenuBar1.add(MenuAdministrativo);
 
         setJMenuBar(jMenuBar1);
@@ -120,23 +122,27 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(jButton1)
-                .addContainerGap(419, Short.MAX_VALUE))
+            .addGap(0, 565, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jButton1)
-                .addContainerGap(191, Short.MAX_VALUE))
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuTipoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuTipoServicoActionPerformed
+
+        try {
+            cons_tipo_servico consTPS;
+            consTPS = new cons_tipo_servico();
+
+            consTPS.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuTipoServicoActionPerformed
 
@@ -164,18 +170,10 @@ public class Dashboard extends javax.swing.JFrame {
         cad_servico.setVisible(true);
     }//GEN-LAST:event_MenuNovoServicoMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        cad_servico cad_servico = new cad_servico();
-        cad_servico.setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        cons_tipo_pagamento consTPP;
+
         try {
+            cons_tipo_pagamento consTPP;
             consTPP = new cons_tipo_pagamento();
 
             consTPP.setVisible(true);
@@ -184,6 +182,27 @@ public class Dashboard extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void MenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesActionPerformed
+        cons_cliente consTPC;
+        consTPC = new cons_cliente();
+
+        consTPC.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuClientesActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            cons_tipo_produto consTPPROD;
+            consTPPROD = new cons_tipo_produto();
+            consTPPROD.setVisible(true);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +247,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuPesquisaServico;
     private javax.swing.JMenu MenuServico;
     private javax.swing.JMenuItem MenuTipoServico;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

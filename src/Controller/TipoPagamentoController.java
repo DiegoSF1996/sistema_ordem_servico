@@ -22,7 +22,13 @@ public class TipoPagamentoController {
     public void salvar(TipoPagamentoClass TPPC) throws SQLException {
 
         TipoPagamentoModel oTppM = new TipoPagamentoModel();
-        oTppM.insert(TPPC);
+        if (TPPC.getTpp_codigo() > 0) {
+
+            oTppM.update(TPPC);
+        } else {
+
+            oTppM.insert(TPPC);
+        }
     }
 
     public List listarTPP(TipoPagamentoClass TPPC) throws SQLException {
@@ -32,9 +38,7 @@ public class TipoPagamentoController {
         return oTppM.obter(TPPC);
     }
 
-    public void excluir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  
 
     public void excluir(TipoPagamentoClass TPPC) throws SQLException {
         TipoPagamentoModel oTppM = new TipoPagamentoModel();

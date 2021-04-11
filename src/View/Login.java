@@ -40,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LOGIN");
 
         jButton1.setText("LOGAR");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {

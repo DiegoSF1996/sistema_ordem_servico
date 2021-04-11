@@ -16,14 +16,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
  * @author CASA
  */
 public class cons_tipo_pagamento extends javax.swing.JFrame {
-    
+
     private final TipoPagamentoController controller;
 
     /**
@@ -33,6 +35,16 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
         initComponents();
         controller = new TipoPagamentoController();
         this.listarTabela();
+
+        TableColumnModel columnModel = jTable1.getColumnModel();
+        /* columnModel.getColumn(0).setPreferredWidth(80);
+        columnModel.getColumn(0).setMaxWidth(80); */
+        
+        columnModel.getColumn(0).setMinWidth(0);
+        columnModel.getColumn(0).setMaxWidth(0);
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(1).setMaxWidth(Integer.MAX_VALUE);
+
     }
 
     /**
@@ -47,15 +59,15 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jButton2 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("CONSULTA TIPO PAGAMENTO");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,6 +93,11 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
             }
         });
         jTable1.setColumnSelectionAllowed(true);
+        jTable1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jTable1ComponentShown(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("APAGAR");
@@ -90,8 +107,6 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("PESQUISAR");
-
         jButton2.setText("NOVO");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,57 +114,70 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("COD");
-
         jLabel2.setText("DESCRIÇÃO");
 
         jButton3.setText("ALTERAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("ATUALIZAR TABELA");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("PESQUISAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3)
-                                .addGap(14, 14, 14)
-                                .addComponent(jButton1))
-                            .addComponent(jToggleButton1)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField2)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton5)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(8, 8, 8)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -162,9 +190,9 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
         int i = jTable1.getSelectedRow();
         if (i >= 0) {
             int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
-            
+
             if (dialogResult == JOptionPane.YES_OPTION) {
-                
+
                 TipoPagamentoClass TPPC = new TipoPagamentoClass(null);
                 TPPC.setTpp_codigo((int) tableModel.getValueAt(i, 0));
                 try {
@@ -172,10 +200,10 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(cons_tipo_pagamento.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 tableModel.removeRow(i);
             }
-            
+
         }
 
         // TODO add your handling code here:
@@ -184,9 +212,56 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         // TODO add your handling code here:
-        cad_tipo_pagamento cadTPP = new cad_tipo_pagamento(this);
+        TipoPagamentoClass TPPC = new TipoPagamentoClass(null);
+        cad_tipo_pagamento cadTPP = new cad_tipo_pagamento(TPPC, this);
         cadTPP.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            this.listarTabela();
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(cons_tipo_pagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
+        int i = jTable1.getSelectedRow();
+
+        if (i >= 0) {
+            TipoPagamentoClass TPPC = new TipoPagamentoClass(null);
+            TPPC.setTpp_codigo((int) tableModel.getValueAt(i, 0));
+            TPPC.setTpp_descricao((String) tableModel.getValueAt(i, 1));
+            cad_tipo_pagamento cadTPP = new cad_tipo_pagamento(TPPC, this);
+            cadTPP.setVisible(true);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        try {
+            TipoPagamentoClass TPPC = new TipoPagamentoClass();
+
+            if (!"".equals(jTextField2.getText()) || jTextField2.getText() != null) {
+                TPPC.setTpp_descricao(jTextField2.getText());
+            }
+
+            this.listarTabela(TPPC);
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(cons_tipo_pagamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTable1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable1ComponentShown
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1ComponentShown
 
     /**
      * @param args the command line arguments
@@ -231,16 +306,16 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
     public void listarTabela() throws SQLException {
+
         TipoPagamentoClass TPPC = new TipoPagamentoClass(null);
         DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
         tableModel.setNumRows(0);
@@ -249,13 +324,22 @@ public class cons_tipo_pagamento extends javax.swing.JFrame {
             tableModel.addRow(new Object[]{tpp.getTpp_codigo(), tpp.getTpp_descricao()});
         }
     }
-    
+
+    public void listarTabela(TipoPagamentoClass TPPC) throws SQLException {
+        DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
+        tableModel.setNumRows(0);
+        List<TipoPagamentoClass> list = controller.listarTPP(TPPC);
+        for (TipoPagamentoClass tpp : list) {
+            tableModel.addRow(new Object[]{tpp.getTpp_codigo(), tpp.getTpp_descricao()});
+        }
+    }
+
     public JTable getjTable1() {
         return jTable1;
     }
-    
+
     public void setjTable1(JTable jTable1) {
         this.jTable1 = jTable1;
     }
-    
+
 }

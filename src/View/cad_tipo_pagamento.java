@@ -18,20 +18,25 @@ import java.util.logging.Logger;
 public class cad_tipo_pagamento extends javax.swing.JFrame {
 
     private final TipoPagamentoController controller;
-    // private final cons_tipo_pagamento consTPP;
+    private final cons_tipo_pagamento consTPP;
+    public TipoPagamentoClass TPPC = new TipoPagamentoClass(null);
 
     /**
      * Creates new form cad_tipo_pagamento
      */
-    public cad_tipo_pagamento() {
+    public cad_tipo_pagamento() throws SQLException {
         initComponents();
         controller = new TipoPagamentoController();
+        this.consTPP = new cons_tipo_pagamento();
     }
 
-    public cad_tipo_pagamento(cons_tipo_pagamento consTPP) {
+    public cad_tipo_pagamento(TipoPagamentoClass TPPC, cons_tipo_pagamento consTPP) {
         initComponents();
         controller = new TipoPagamentoController();
-        // this.consTPP = consTPP;
+        this.TPPC = TPPC;
+
+        jTextField1.setText(TPPC.getTpp_descricao());
+        this.consTPP = consTPP;
     }
 
     /**
@@ -106,10 +111,19 @@ public class cad_tipo_pagamento extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            TipoPagamentoClass TPPC = new TipoPagamentoClass(jTextField1.getText());
-            controller.salvar(TPPC);
-            jTextField1.setText("");
 
+            TipoPagamentoClass TPPC = new TipoPagamentoClass();
+
+            TPPC.setTpp_descricao(jTextField1.getText());
+            if (this.TPPC.getTpp_codigo() > 0) {
+                System.out.println(this.TPPC.getTpp_codigo());
+                TPPC.setTpp_codigo(this.TPPC.getTpp_codigo());
+            }
+
+            System.out.println(TPPC.getTpp_descricao());
+            controller.salvar(TPPC);
+            //jTextField1.setText("");
+            this.consTPP.listarTabela();
             // TODO add your handling code here:
         } catch (SQLException ex) {
             Logger.getLogger(cad_tipo_pagamento.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +164,11 @@ public class cad_tipo_pagamento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cad_tipo_pagamento().setVisible(true);
+                try {
+                    new cad_tipo_pagamento().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(cad_tipo_pagamento.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

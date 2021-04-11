@@ -40,15 +40,41 @@ public class TipoPagamentoModel {
 
     }
 
-    public List obter(TipoPagamentoClass TPPC) throws SQLException {
-        String query = "select * from " + table + " where 1=1";
+    public boolean update(TipoPagamentoClass TPPC) throws SQLException {
 
+        String query = "UPDATE " + table;
+
+        if (TPPC.tpp_descricao != null) {
+
+            query += " set tpp_descricao = '" + TPPC.tpp_descricao + "'";
+        }
+
+        if (TPPC.tpp_codigo > 0) {
+
+            query += " where tpp_codigo = " + TPPC.tpp_codigo;
+        }
+
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+        int registros = pstmt.executeUpdate();
+        pstmt.close();// fecha a db
+        if (registros == 1) {
+            return true;
+
+        }
+        return false;
+
+    }
+
+    public List obter(TipoPagamentoClass TPPC) throws SQLException {
+        String query = "select * from " + table + " where 1=1 ";
         if (TPPC.tpp_codigo != 0) {
             query = query + " and tpp_codigo = " + TPPC.tpp_codigo;
         }
-        if (TPPC.tpp_descricao != null) {
-            query = query + " and tpp_descricao = " + TPPC.tpp_descricao;
+
+        if (TPPC.tpp_descricao != null && !TPPC.tpp_descricao.isEmpty()) {
+            query = query + " and tpp_descricao LIKE '%" + TPPC.tpp_descricao + "%'";
         }
+        query = query + " ORDER BY tpp_descricao ";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();
