@@ -20,7 +20,7 @@ public class cad_cliente extends javax.swing.JFrame {
 
     private final ClienteController controller;
     private final cons_cliente consClien;
-    public ClienteClass TPPC = new ClienteClass();
+    public ClienteClass CC = new ClienteClass();
 
     /**
      * Creates new form cad_cliente
@@ -31,61 +31,61 @@ public class cad_cliente extends javax.swing.JFrame {
         this.consClien = new cons_cliente();
     }
 
-    public cad_cliente(ClienteClass TPPC, cons_cliente consClien) {
+    public cad_cliente(ClienteClass CC, cons_cliente consClien) {
         initComponents();
         controller = new ClienteController();
-        this.TPPC = TPPC;
+        this.CC = CC;
 
-        jTextField4.setText(TPPC.getCli_descricao());
+        cli_descricao.setText(CC.getCli_descricao());
         this.consClien = consClien;
     }
 
     public JTextField getjTextField4() {
-        return jTextField4;
+        return cli_descricao;
     }
 
     public void setjTextField4(JTextField jTextField4) {
-        this.jTextField4 = jTextField4;
+        this.cli_descricao = jTextField4;
     }
 
     public JTextField getjTextField5() {
-        return jTextField5;
+        return cli_endereco;
     }
 
     public void setjTextField5(JTextField jTextField5) {
-        this.jTextField5 = jTextField5;
+        this.cli_endereco = jTextField5;
     }
 
     public JTextField getjTextField6() {
-        return jTextField6;
+        return cli_bairro;
     }
 
     public void setjTextField6(JTextField jTextField6) {
-        this.jTextField6 = jTextField6;
+        this.cli_bairro = jTextField6;
     }
 
     public JTextField getjTextField7() {
-        return jTextField7;
+        return cli_cep;
     }
 
     public void setjTextField7(JTextField jTextField7) {
-        this.jTextField7 = jTextField7;
+        this.cli_cep = cli_cep;
     }
 
     public JTextField getjTextField8() {
-        return jTextField8;
+        return cli_telefone;
     }
 
     public void setjTextField8(JTextField jTextField8) {
-        this.jTextField8 = jTextField8;
+        this.cli_telefone = cli_telefone;
     }
 
     public JTextField getjTextField9() {
-        return jTextField9;
+        return cli_email;
     }
 
     public void setjTextField9(JTextField jTextField9) {
-        this.jTextField9 = jTextField9;
+        this.cli_email = jTextField9;
     }
 
     /**
@@ -98,27 +98,52 @@ public class cad_cliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        label_cli_nome = new javax.swing.JLabel();
+        label_cli_endereco = new javax.swing.JLabel();
+        label_cli_bairo = new javax.swing.JLabel();
+        label_cli_cep = new javax.swing.JLabel();
+        label_cli_telefone = new javax.swing.JLabel();
+        label_cli_email = new javax.swing.JLabel();
+        cli_descricao = new javax.swing.JTextField();
+        cli_endereco = new javax.swing.JTextField();
+        cli_bairro = new javax.swing.JTextField();
+        cli_email = new javax.swing.JTextField();
+        cli_pj = new javax.swing.JCheckBox();
+        cli_telefone = new javax.swing.JFormattedTextField();
 
+        cli_telefone = new javax.swing.JFormattedTextField();
+
+        // Code adding the component to the parent container - not shown here
         try{
-            javax.swing.text.MaskFormatter cpf= new javax.swing.text.MaskFormatter("##/##/####");
-            jFormattedTextField1 = new javax.swing.JFormattedTextField(cpf);
+
+            javax.swing.text.MaskFormatter telefone = new javax.swing.text.MaskFormatter("(##) #####-####");
+            cli_telefone = new javax.swing.JFormattedTextField(telefone);
         }
         catch (Exception e){
         }
+        cli_telefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cli_telefoneActionPerformed(evt);
+            }
+        });
+
+        // Code adding the component to the parent container - not shown here
+        cli_cep = new javax.swing.JFormattedTextField();
+        cli_cep = new javax.swing.JFormattedTextField();
+
+        // Code adding the component to the parent container - not shown here
+        try{
+
+            javax.swing.text.MaskFormatter cep_mascara = new javax.swing.text.MaskFormatter("#####-###");
+            cli_cep = new javax.swing.JFormattedTextField(cep_mascara);
+        }
+        catch (Exception e){
+        }
+        cli_cep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cli_cepActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CADASTRO CLIENTE");
@@ -130,19 +155,19 @@ public class cad_cliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("NOME");
+        label_cli_nome.setText("NOME");
 
-        jLabel5.setText("ENDEREÇO");
+        label_cli_endereco.setText("ENDEREÇO");
 
-        jLabel6.setText("BAIRRO");
+        label_cli_bairo.setText("BAIRRO");
 
-        jLabel7.setText("CEP");
+        label_cli_cep.setText("CEP");
 
-        jLabel8.setText("TELEFONE");
+        label_cli_telefone.setText("TELEFONE");
 
-        jLabel9.setText("E-MAIL");
+        label_cli_email.setText("E-MAIL");
 
-        jCheckBox1.setText("PJ");
+        cli_pj.setText("PJ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,67 +179,71 @@ public class cad_cliente extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(49, 49, 49)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel9)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox1)
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addComponent(label_cli_email)
+                                        .addGap(398, 398, 398))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(cli_email)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(label_cli_bairo)
+                                                    .addComponent(cli_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(label_cli_cep)
+                                                        .addGap(127, 127, 127))
+                                                    .addComponent(cli_cep))))
+                                        .addGap(23, 23, 23)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cli_telefone)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(label_cli_telefone)
+                                            .addComponent(cli_pj))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(label_cli_nome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_cli_endereco, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cli_descricao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cli_endereco, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addComponent(label_cli_nome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cli_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(label_cli_endereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cli_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(label_cli_bairo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel8))
+                            .addComponent(cli_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cli_cep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label_cli_cep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cli_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_cli_telefone))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(label_cli_email)
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cli_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cli_pj))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(22, 22, 22))
@@ -224,7 +253,33 @@ public class cad_cliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            //Objeto que vai salvar os dados do formulario,
+            //ele serve para enviar os dados de view, controller e model
+            ClienteClass CC = new ClienteClass();
+            //Salvando informações
+            CC.setCli_descricao(cli_descricao.getText());
+            CC.setCli_endereco(cli_endereco.getText());
+            CC.setCli_cep(cli_cep.getText());
+            CC.setCli_bairro(cli_bairro.getText());
+            CC.setCli_telefone(cli_telefone.getText());
+            CC.setCli_email(cli_email.getText());
+            CC.setCli_pj(cli_pj.isSelected());
 
+            if (this.CC.getCli_codigo()
+                    > 0) {
+                System.out.println(this.CC.getCli_codigo());
+                CC.setCli_codigo(this.CC.getCli_codigo());
+            }
+
+            controller.salvar(CC);
+
+            this.consClien.listarTabela();
+            //jTextField1.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(cad_tipo_servico.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -244,13 +299,17 @@ public class cad_cliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(cad_cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cad_cliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(cad_cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cad_cliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(cad_cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cad_cliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(cad_cliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cad_cliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -260,27 +319,27 @@ public class cad_cliente extends javax.swing.JFrame {
                 try {
                     new cad_cliente().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(cad_cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(cad_cliente.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cli_bairro;
+    private javax.swing.JFormattedTextField cli_cep;
+    private javax.swing.JTextField cli_descricao;
+    private javax.swing.JTextField cli_email;
+    private javax.swing.JTextField cli_endereco;
+    private javax.swing.JCheckBox cli_pj;
+    private javax.swing.JFormattedTextField cli_telefone;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel label_cli_bairo;
+    private javax.swing.JLabel label_cli_cep;
+    private javax.swing.JLabel label_cli_email;
+    private javax.swing.JLabel label_cli_endereco;
+    private javax.swing.JLabel label_cli_nome;
+    private javax.swing.JLabel label_cli_telefone;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,7 +24,7 @@ public class cad_tipo_servico extends javax.swing.JFrame {
     /**
      * Creates new form cad_tipo_servico
      */
-    public cad_tipo_servico() {
+    public cad_tipo_servico() throws SQLException {
         initComponents();
         controller = new TipoServicoController();
         this.consTPS = new cons_tipo_servico();
@@ -165,7 +165,11 @@ public class cad_tipo_servico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cad_tipo_servico().setVisible(true);
+                try {
+                    new cad_tipo_servico().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(cad_tipo_servico.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

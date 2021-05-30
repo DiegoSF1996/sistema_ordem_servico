@@ -26,9 +26,27 @@ public class ClienteModel {
 
     public boolean insert(ClienteClass CLIENCLASS) throws SQLException {
 
-        PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + " (cli_descricao)" + " VALUES (?)");
+        PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + " (cli_descricao, cli_endereco, cli_cep, cli_bairro, cli_email, cli_telefone, cli_pj)" + " VALUES (?,?,?,?,?,?,?)");
         if (CLIENCLASS.cli_descricao != null) {
             pstmt.setString(1, CLIENCLASS.cli_descricao);
+        }
+        if (CLIENCLASS.cli_endereco != null) {
+            pstmt.setString(2, CLIENCLASS.cli_endereco);
+        }
+        if (CLIENCLASS.cli_cep != null) {
+            pstmt.setString(3, CLIENCLASS.cli_cep);
+        }
+        if (CLIENCLASS.cli_bairro != null) {
+            pstmt.setString(4, CLIENCLASS.cli_bairro);
+        }
+        if (CLIENCLASS.cli_email != null) {
+            pstmt.setString(5, CLIENCLASS.cli_email);
+        }
+        if (CLIENCLASS.cli_telefone != null) {
+            pstmt.setString(6, CLIENCLASS.cli_telefone);
+        }
+        if (CLIENCLASS.cli_pj != null) {
+            pstmt.setBoolean(7, CLIENCLASS.cli_pj);
         }
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -42,11 +60,35 @@ public class ClienteModel {
 
     public boolean update(ClienteClass CLIENCLASS) throws SQLException {
 
-        String query = "UPDATE " + table;
+        String query = "UPDATE " + table + "SET ";
 
         if (CLIENCLASS.cli_descricao != null) {
 
-            query += " set cli_descricao = '" + CLIENCLASS.cli_descricao + "'";
+            query += " cli_descricao = '" + CLIENCLASS.cli_descricao + "' ,";
+        }
+        if (CLIENCLASS.cli_endereco != null) {
+
+            query += " cli_endereco = '" + CLIENCLASS.cli_endereco + "',";
+        }
+        if (CLIENCLASS.cli_bairro != null) {
+
+            query += " cli_bairro = '" + CLIENCLASS.cli_bairro + "',";
+        }
+        if (CLIENCLASS.cli_cep != null) {
+
+            query += "  cli_cep = '" + CLIENCLASS.cli_cep + "',";
+        }
+        if (CLIENCLASS.cli_telefone != null) {
+
+            query += " cli_telefone = '" + CLIENCLASS.cli_telefone + "',";
+        }
+        if (CLIENCLASS.cli_pj != null) {
+
+            query += " cli_pj = '" + CLIENCLASS.cli_pj + "',";
+        }
+        if (CLIENCLASS.cli_email != null) {
+
+            query += " cli_email = '" + CLIENCLASS.cli_email + "'";
         }
 
         if (CLIENCLASS.cli_codigo > 0) {
