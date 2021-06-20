@@ -11,8 +11,8 @@ package classes;
  */
 public class TipoServicoClass {
 
-    public int tps_codigo;
-    public String tps_descricao;
+    private int tps_codigo;
+    private String tps_descricao;
 
     public TipoServicoClass(String tps_descricao) {
         this.setTps_descricao(tps_descricao);

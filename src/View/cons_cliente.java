@@ -108,14 +108,14 @@ public class cons_cliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "COD", "NOME"
+                "COD", "NOME", "ENDEREÇO", "E-MAIL", "TELEFONE"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -234,7 +234,12 @@ public class cons_cliente extends javax.swing.JFrame {
 
         // TODO add your handling code here:
         ClienteClass CLIENCLASS = new ClienteClass();
-        cad_cliente cadClien = new cad_cliente(CLIENCLASS, this);
+        cad_cliente cadClien = null;
+        try {
+            cadClien = new cad_cliente(this);
+        } catch (SQLException ex) {
+            Logger.getLogger(cons_cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cadClien.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -247,7 +252,12 @@ public class cons_cliente extends javax.swing.JFrame {
             ClienteClass CLIENCLASS = new ClienteClass();
             CLIENCLASS.setCli_codigo((int) tableModel.getValueAt(i, 0));
             CLIENCLASS.setCli_descricao((String) tableModel.getValueAt(i, 1));
-            cad_cliente cadClien = new cad_cliente(CLIENCLASS, this);
+            cad_cliente cadClien = null;
+            try {
+                cadClien = new cad_cliente(CLIENCLASS, this);
+            } catch (SQLException ex) {
+                Logger.getLogger(cons_cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
             cadClien.setVisible(true);
         }
         // TODO add your handling code here:
@@ -339,16 +349,18 @@ public void listarTabela() throws SQLException {
         ClienteClass ClienClass = new ClienteClass(null);
         DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
         tableModel.setNumRows(0);
-        List<ClienteClass> list = controller.listarTPP(ClienClass);
-        for (ClienteClass tpp : list) {
-            tableModel.addRow(new Object[]{tpp.getCli_codigo(), tpp.getCli_descricao()});
+        List<ClienteClass> list = controller.listarClien(ClienClass);
+        for (ClienteClass clien : list) {
+            tableModel.addRow(new Object[]{clien.getCli_codigo(),
+                clien.getCli_descricao(), clien.getCli_endereco(),
+                clien.getCli_email(), clien.getCli_telefone()});
         }
     }
 
     private void listarTabela(ClienteClass ClienClass) throws SQLException {
         DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
         tableModel.setNumRows(0);
-        List<ClienteClass> list = controller.listarTPP(ClienClass);
+        List<ClienteClass> list = controller.listarClien(ClienClass);
         for (ClienteClass cli : list) {
             tableModel.addRow(new Object[]{cli.getCli_codigo(), cli.getCli_descricao()});
         }

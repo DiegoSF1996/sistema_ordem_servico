@@ -7,9 +7,12 @@ package View;
 
 import Controller.ClienteController;
 import classes.ClienteClass;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 /**
@@ -31,12 +34,29 @@ public class cad_cliente extends javax.swing.JFrame {
         this.consClien = new cons_cliente();
     }
 
-    public cad_cliente(ClienteClass CC, cons_cliente consClien) {
+    public cad_cliente(cons_cliente consClien) throws SQLException {
+        initComponents();
+        controller = new ClienteController();
+        this.consClien =  consClien;
+    }
+
+    public cad_cliente(ClienteClass CC, cons_cliente consClien) throws SQLException {
         initComponents();
         controller = new ClienteController();
         this.CC = CC;
 
-        cli_descricao.setText(CC.getCli_descricao());
+        ClienteClass oCliente = controller.obterPorPk(CC);
+
+        cli_descricao.setText(oCliente.getCli_descricao());
+        cli_endereco.setText(oCliente.getCli_endereco());
+        cli_bairro.setText(oCliente.getCli_bairro());
+        cli_cep.setText(oCliente.getCli_cep());
+        cli_telefone.setText(oCliente.getCli_telefone());
+        cli_email.setText(oCliente.getCli_email());
+        System.out.println(oCliente.getCli_pj());
+        if (oCliente.getCli_pj() == true) {
+            cli_pj.setSelected(true);
+        }
         this.consClien = consClien;
     }
 
@@ -167,6 +187,12 @@ public class cad_cliente extends javax.swing.JFrame {
 
         label_cli_email.setText("E-MAIL");
 
+        cli_endereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cli_enderecoActionPerformed(evt);
+            }
+        });
+
         cli_pj.setText("PJ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,11 +290,13 @@ public class cad_cliente extends javax.swing.JFrame {
             CC.setCli_bairro(cli_bairro.getText());
             CC.setCli_telefone(cli_telefone.getText());
             CC.setCli_email(cli_email.getText());
-            CC.setCli_pj(cli_pj.isSelected());
-
-            if (this.CC.getCli_codigo()
-                    > 0) {
-                System.out.println(this.CC.getCli_codigo());
+            if (cli_pj.isSelected()) {
+                CC.setCli_pj(true);
+            } else {
+                CC.setCli_pj(false);
+            }
+            System.out.println("checkbo " + cli_pj.isSelected() + " var: " + CC.getCli_pj());
+            if (this.CC.getCli_codigo() > 0) {
                 CC.setCli_codigo(this.CC.getCli_codigo());
             }
 
@@ -281,6 +309,10 @@ public class cad_cliente extends javax.swing.JFrame {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cli_enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cli_enderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cli_enderecoActionPerformed
 
     /**
      * @param args the command line arguments

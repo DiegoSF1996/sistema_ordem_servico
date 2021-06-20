@@ -11,14 +11,14 @@ package classes;
  */
 public final class ClienteClass {
     
-    public int cli_codigo;
-    public String cli_descricao;
-    public String cli_endereco;
-    public String cli_cep;
-    public String cli_bairro;
-    public String cli_telefone;
-    public String cli_email;
-    public Boolean cli_pj;
+    private int cli_codigo;
+    private String cli_descricao;
+    private String cli_endereco;
+    private String cli_cep;
+    private String cli_bairro;
+    private String cli_telefone;
+    private String cli_email;
+    private Boolean cli_pj;
     
     public ClienteClass() {
     }

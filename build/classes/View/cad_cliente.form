@@ -167,6 +167,9 @@
     <Component class="javax.swing.JTextField" name="cli_descricao">
     </Component>
     <Component class="javax.swing.JTextField" name="cli_endereco">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cli_enderecoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="cli_bairro">
     </Component>

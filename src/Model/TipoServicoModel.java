@@ -25,8 +25,8 @@ public class TipoServicoModel {
     public boolean insert(TipoServicoClass TPSC) throws SQLException {
 
         PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + " (tps_descricao)" + " VALUES (?)");
-        if (TPSC.tps_descricao != null) {
-            pstmt.setString(1, TPSC.tps_descricao);
+        if (TPSC.getTps_descricao() != null) {
+            pstmt.setString(1, TPSC.getTps_descricao());
         }
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -42,14 +42,14 @@ public class TipoServicoModel {
 
         String query = "UPDATE " + table;
 
-        if (TPSC.tps_descricao != null) {
+        if (TPSC.getTps_descricao() != null) {
 
-            query += " set tps_descricao = '" + TPSC.tps_descricao + "'";
+            query += " set getTps_descricao() = '" + TPSC.getTps_descricao() + "'";
         }
 
-        if (TPSC.tps_codigo > 0) {
+        if (TPSC.getTps_codigo() > 0) {
 
-            query += " where tps_codigo = " + TPSC.tps_codigo;
+            query += " where tps_codigo = " + TPSC.getTps_codigo();
         }
 
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
@@ -65,12 +65,12 @@ public class TipoServicoModel {
 
     public List obter(TipoServicoClass TPSC) throws SQLException {
         String query = "select * from " + table + " where 1=1 ";
-        if (TPSC.tps_codigo != 0) {
-            query = query + " and tps_codigo = " + TPSC.tps_codigo;
+        if (TPSC.getTps_codigo() != 0) {
+            query = query + " and tps_codigo = " + TPSC.getTps_codigo();
         }
 
-        if (TPSC.tps_descricao != null && !TPSC.tps_descricao.isEmpty()) {
-            query = query + " and tps_descricao LIKE  '%" + TPSC.tps_descricao + "%'";
+        if (TPSC.getTps_descricao() != null && !TPSC.getTps_descricao().isEmpty()) {
+            query = query + " and tps_descricao LIKE  '%" + TPSC.getTps_descricao() + "%'";
         }
         query = query + " ORDER BY tps_descricao ";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
@@ -94,11 +94,11 @@ public class TipoServicoModel {
     public void excluir(TipoServicoClass TPSC) throws SQLException {
         String query = "delete from " + table + " where 1=1 ";
 
-        if (TPSC.tps_codigo != 0) {
-            query = query + " and  tps_codigo = " + TPSC.tps_codigo;
+        if (TPSC.getTps_codigo() != 0) {
+            query = query + " and  tps_codigo = " + TPSC.getTps_codigo();
         }
-        if (TPSC.tps_descricao != null) {
-            query = query + " and tps_descricao = " + TPSC.tps_descricao;
+        if (TPSC.getTps_descricao() != null) {
+            query = query + " and tps_descricao = " + TPSC.getTps_descricao();
         }
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         pstmt.execute();

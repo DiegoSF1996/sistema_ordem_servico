@@ -11,8 +11,8 @@ package classes;
  */
 public class TipoPagamentoClass {
 
-    public int tpp_codigo;
-    public String tpp_descricao;
+    private int tpp_codigo;
+    private String tpp_descricao;
 
     public TipoPagamentoClass() {
 

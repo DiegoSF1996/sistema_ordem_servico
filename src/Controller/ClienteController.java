@@ -28,13 +28,19 @@ public class ClienteController {
         }
     }
 
-    public List listarTPP(ClienteClass CLIENCLASS) throws SQLException {
+    public List listarClien(ClienteClass CLIENCLASS) throws SQLException {
 
         ClienteModel oClienM = new ClienteModel();
 
         return oClienM.obter(CLIENCLASS);
     }
-
+    public ClienteClass obterPorPk(ClienteClass CLIENCLASS) throws SQLException{
+        
+        ClienteModel oClienM = new ClienteModel();
+        
+        return oClienM.obterPorPk(CLIENCLASS);
+    }
+    
     public void excluir(ClienteClass CLIENCLASS) throws SQLException {
         ClienteModel oClienM = new ClienteModel();
 

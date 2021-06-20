@@ -27,26 +27,26 @@ public class ClienteModel {
     public boolean insert(ClienteClass CLIENCLASS) throws SQLException {
 
         PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + " (cli_descricao, cli_endereco, cli_cep, cli_bairro, cli_email, cli_telefone, cli_pj)" + " VALUES (?,?,?,?,?,?,?)");
-        if (CLIENCLASS.cli_descricao != null) {
-            pstmt.setString(1, CLIENCLASS.cli_descricao);
+        if (CLIENCLASS.getCli_descricao() != null) {
+            pstmt.setString(1, CLIENCLASS.getCli_descricao());
         }
-        if (CLIENCLASS.cli_endereco != null) {
-            pstmt.setString(2, CLIENCLASS.cli_endereco);
+        if (CLIENCLASS.getCli_endereco() != null) {
+            pstmt.setString(2, CLIENCLASS.getCli_endereco());
         }
-        if (CLIENCLASS.cli_cep != null) {
-            pstmt.setString(3, CLIENCLASS.cli_cep);
+        if (CLIENCLASS.getCli_cep() != null) {
+            pstmt.setString(3, CLIENCLASS.getCli_cep());
         }
-        if (CLIENCLASS.cli_bairro != null) {
-            pstmt.setString(4, CLIENCLASS.cli_bairro);
+        if (CLIENCLASS.getCli_bairro() != null) {
+            pstmt.setString(4, CLIENCLASS.getCli_bairro());
         }
-        if (CLIENCLASS.cli_email != null) {
-            pstmt.setString(5, CLIENCLASS.cli_email);
+        if (CLIENCLASS.getCli_email() != null) {
+            pstmt.setString(5, CLIENCLASS.getCli_email());
         }
-        if (CLIENCLASS.cli_telefone != null) {
-            pstmt.setString(6, CLIENCLASS.cli_telefone);
+        if (CLIENCLASS.getCli_telefone() != null) {
+            pstmt.setString(6, CLIENCLASS.getCli_telefone());
         }
-        if (CLIENCLASS.cli_pj != null) {
-            pstmt.setBoolean(7, CLIENCLASS.cli_pj);
+        if (CLIENCLASS.getCli_pj() != null) {
+            pstmt.setBoolean(7, CLIENCLASS.getCli_pj());
         }
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -60,42 +60,41 @@ public class ClienteModel {
 
     public boolean update(ClienteClass CLIENCLASS) throws SQLException {
 
-        String query = "UPDATE " + table + "SET ";
+        String query = "UPDATE " + table + " SET ";
 
-        if (CLIENCLASS.cli_descricao != null) {
+        if (CLIENCLASS.getCli_descricao() != null) {
 
-            query += " cli_descricao = '" + CLIENCLASS.cli_descricao + "' ,";
+            query += " cli_descricao = '" + CLIENCLASS.getCli_descricao() + "' ,";
         }
-        if (CLIENCLASS.cli_endereco != null) {
+        if (CLIENCLASS.getCli_endereco() != null) {
 
-            query += " cli_endereco = '" + CLIENCLASS.cli_endereco + "',";
+            query += " cli_endereco = '" + CLIENCLASS.getCli_endereco() + "',";
         }
-        if (CLIENCLASS.cli_bairro != null) {
+        if (CLIENCLASS.getCli_bairro() != null) {
 
-            query += " cli_bairro = '" + CLIENCLASS.cli_bairro + "',";
+            query += " cli_bairro = '" + CLIENCLASS.getCli_bairro() + "' ,";
         }
-        if (CLIENCLASS.cli_cep != null) {
+        if (CLIENCLASS.getCli_cep() != null) {
 
-            query += "  cli_cep = '" + CLIENCLASS.cli_cep + "',";
+            query += "  cli_cep = '" + CLIENCLASS.getCli_cep() + "' ,";
         }
-        if (CLIENCLASS.cli_telefone != null) {
+        if (CLIENCLASS.getCli_telefone() != null) {
 
-            query += " cli_telefone = '" + CLIENCLASS.cli_telefone + "',";
+            query += " cli_telefone = '" + CLIENCLASS.getCli_telefone() + "' ,";
         }
-        if (CLIENCLASS.cli_pj != null) {
+        if (CLIENCLASS.getCli_pj() != null) {
 
-            query += " cli_pj = '" + CLIENCLASS.cli_pj + "',";
+            query += " cli_pj = '" + CLIENCLASS.getCli_pj() + "' ,";
         }
-        if (CLIENCLASS.cli_email != null) {
+        if (CLIENCLASS.getCli_email() != null) {
 
-            query += " cli_email = '" + CLIENCLASS.cli_email + "'";
-        }
-
-        if (CLIENCLASS.cli_codigo > 0) {
-
-            query += " where cli_codigo = " + CLIENCLASS.cli_codigo;
+            query += " cli_email = '" + CLIENCLASS.getCli_email() + "'";
         }
 
+        if (CLIENCLASS.getCli_codigo() > 0) {
+
+            query += " where cli_codigo = " + CLIENCLASS.getCli_codigo();
+        }
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -109,12 +108,12 @@ public class ClienteModel {
 
     public List obter(ClienteClass CLIENCLASS) throws SQLException {
         String query = "select * from " + table + " where 1=1 ";
-        if (CLIENCLASS.cli_codigo != 0) {
-            query = query + " and cli_codigo = " + CLIENCLASS.cli_codigo;
+        if (CLIENCLASS.getCli_codigo() != 0) {
+            query = query + " and cli_codigo = " + CLIENCLASS.getCli_codigo();
         }
 
-        if (CLIENCLASS.cli_descricao != null && !CLIENCLASS.cli_descricao.isEmpty()) {
-            query = query + " and cli_descricao LIKE '%" + CLIENCLASS.cli_descricao + "%'";
+        if (CLIENCLASS.getCli_descricao() != null && !CLIENCLASS.getCli_descricao().isEmpty()) {
+            query = query + " and cli_descricao LIKE '%" + CLIENCLASS.getCli_descricao() + "%'";
         }
         query = query + " ORDER BY cli_descricao ";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
@@ -126,6 +125,13 @@ public class ClienteModel {
             ClienteClass TPPSalvar = new ClienteClass();
             TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
             TPPSalvar.setCli_descricao(rs.getString("cli_descricao"));
+            TPPSalvar.setCli_endereco(rs.getString("cli_endereco"));
+            TPPSalvar.setCli_bairro(rs.getString("cli_bairro"));
+            TPPSalvar.setCli_cep(rs.getString("cli_cep"));
+            TPPSalvar.setCli_telefone(rs.getString("cli_telefone"));
+            TPPSalvar.setCli_email(rs.getString("cli_email"));
+            TPPSalvar.setCli_pj(rs.getBoolean("cli_pj"));
+
             ACLIENCLASS.add(TPPSalvar);
 
         }
@@ -138,14 +144,42 @@ public class ClienteModel {
     public void excluir(ClienteClass CLIENCLASS) throws SQLException {
         String query = "delete from " + table + " where 1=1 ";
 
-        if (CLIENCLASS.cli_codigo != 0) {
-            query = query + " and  cli_codigo = " + CLIENCLASS.cli_codigo;
+        if (CLIENCLASS.getCli_codigo() != 0) {
+            query = query + " and  cli_codigo = " + CLIENCLASS.getCli_codigo();
         }
-        if (CLIENCLASS.cli_descricao != null) {
-            query = query + " and cli_descricao = " + CLIENCLASS.cli_descricao;
+        if (CLIENCLASS.getCli_descricao() != null) {
+            query = query + " and cli_descricao = " + CLIENCLASS.getCli_descricao();
         }
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         pstmt.execute();
+    }
+
+    public ClienteClass obterPorPk(ClienteClass CLIENCLASS) throws SQLException {
+
+        String query = "select * from " + table + " where 1=1 ";
+        if (CLIENCLASS.getCli_codigo() != 0) {
+            query = query + " and cli_codigo = " + CLIENCLASS.getCli_codigo();
+        }
+
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+        ClienteClass TPPSalvar = new ClienteClass();
+        while (rs.next()) {
+            TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
+            TPPSalvar.setCli_descricao(rs.getString("cli_descricao"));
+            TPPSalvar.setCli_endereco(rs.getString("cli_endereco"));
+            TPPSalvar.setCli_bairro(rs.getString("cli_bairro"));
+            TPPSalvar.setCli_cep(rs.getString("cli_cep"));
+            TPPSalvar.setCli_telefone(rs.getString("cli_telefone"));
+            TPPSalvar.setCli_email(rs.getString("cli_email"));
+            TPPSalvar.setCli_pj(false);
+            if ("true".equals(rs.getString("cli_pj"))) {
+                TPPSalvar.setCli_pj(true);
+            }
+        }
+        return TPPSalvar;
+
     }
 
 }

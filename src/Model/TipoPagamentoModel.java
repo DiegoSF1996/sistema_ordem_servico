@@ -27,8 +27,8 @@ public class TipoPagamentoModel {
     public boolean insert(TipoPagamentoClass TPPC) throws SQLException {
 
         PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + " (tpp_descricao)" + " VALUES (?)");
-        if (TPPC.tpp_descricao != null) {
-            pstmt.setString(1, TPPC.tpp_descricao);
+        if (TPPC.getTpp_descricao() != null) {
+            pstmt.setString(1, TPPC.getTpp_descricao());
         }
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -44,14 +44,14 @@ public class TipoPagamentoModel {
 
         String query = "UPDATE " + table;
 
-        if (TPPC.tpp_descricao != null) {
+        if (TPPC.getTpp_descricao() != null) {
 
-            query += " set tpp_descricao = '" + TPPC.tpp_descricao + "'";
+            query += " set tpp_descricao = '" + TPPC.getTpp_descricao() + "'";
         }
 
-        if (TPPC.tpp_codigo > 0) {
+        if (TPPC.getTpp_codigo() > 0) {
 
-            query += " where tpp_codigo = " + TPPC.tpp_codigo;
+            query += " where tpp_codigo = " + TPPC.getTpp_codigo();
         }
 
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
@@ -67,12 +67,12 @@ public class TipoPagamentoModel {
 
     public List obter(TipoPagamentoClass TPPC) throws SQLException {
         String query = "select * from " + table + " where 1=1 ";
-        if (TPPC.tpp_codigo != 0) {
-            query = query + " and tpp_codigo = " + TPPC.tpp_codigo;
+        if (TPPC.getTpp_codigo() != 0) {
+            query = query + " and tpp_codigo = " + TPPC.getTpp_codigo();
         }
 
-        if (TPPC.tpp_descricao != null && !TPPC.tpp_descricao.isEmpty()) {
-            query = query + " and tpp_descricao LIKE '%" + TPPC.tpp_descricao + "%'";
+        if (TPPC.getTpp_descricao() != null && !TPPC.getTpp_descricao().isEmpty()) {
+            query = query + " and tpp_descricao LIKE '%" + TPPC.getTpp_descricao() + "%'";
         }
         query = query + " ORDER BY tpp_descricao ";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
@@ -96,11 +96,11 @@ public class TipoPagamentoModel {
     public void excluir(TipoPagamentoClass TPPC) throws SQLException {
         String query = "delete from " + table + " where 1=1 ";
 
-        if (TPPC.tpp_codigo != 0) {
-            query = query + " and  tpp_codigo = " + TPPC.tpp_codigo;
+        if (TPPC.getTpp_codigo() != 0) {
+            query = query + " and  tpp_codigo = " + TPPC.getTpp_codigo();
         }
-        if (TPPC.tpp_descricao != null) {
-            query = query + " and tpp_descricao = " + TPPC.tpp_descricao;
+        if (TPPC.getTpp_descricao() != null) {
+            query = query + " and tpp_descricao = " + TPPC.getTpp_descricao();
         }
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         pstmt.execute();
