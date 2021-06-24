@@ -130,38 +130,34 @@ public class cad_cliente extends javax.swing.JFrame {
         cli_email = new javax.swing.JTextField();
         cli_pj = new javax.swing.JCheckBox();
         cli_telefone = new javax.swing.JFormattedTextField();
-
-        cli_telefone = new javax.swing.JFormattedTextField();
-
         // Code adding the component to the parent container - not shown here
         try{
 
             javax.swing.text.MaskFormatter telefone = new javax.swing.text.MaskFormatter("(##) #####-####");
             cli_telefone = new javax.swing.JFormattedTextField(telefone);
-        }
-        catch (Exception e){
+        } catch (Exception e){
+
         }
         cli_telefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cli_telefoneActionPerformed(evt);
+                //cli_telefoneActionPerformed(evt);
+
             }
         });
 
         // Code adding the component to the parent container - not shown here
         cli_cep = new javax.swing.JFormattedTextField();
-        cli_cep = new javax.swing.JFormattedTextField();
-
         // Code adding the component to the parent container - not shown here
         try{
-
             javax.swing.text.MaskFormatter cep_mascara = new javax.swing.text.MaskFormatter("#####-###");
             cli_cep = new javax.swing.JFormattedTextField(cep_mascara);
-        }
-        catch (Exception e){
+        } catch (Exception e){
+
         }
         cli_cep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cli_cepActionPerformed(evt);
+                //cli_cepActionPerformed(evt);
+
             }
         });
 

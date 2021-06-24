@@ -159,15 +159,25 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void MenuNovoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNovoServicoActionPerformed
-        cad_servico cad_servico = new cad_servico();
-        cad_servico.setVisible(true);
+        cad_servico cad_servico = null;
+        try {
+            cad_servico = new cad_servico();
+            cad_servico.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuNovoServicoActionPerformed
 
     private void MenuNovoServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuNovoServicoMouseClicked
         // TODO add your handling code here:
-        cad_servico cad_servico = new cad_servico();
-        cad_servico.setVisible(true);
+        cad_servico cad_servico = null;
+        try {
+            cad_servico = new cad_servico();
+            cad_servico.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MenuNovoServicoMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -184,10 +194,14 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void MenuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClientesActionPerformed
-        cons_cliente consTPC;
-        consTPC = new cons_cliente();
+        cons_cliente consTPC = null;
+        try {
+            consTPC = new cons_cliente();
+            consTPC.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        consTPC.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuClientesActionPerformed
 
