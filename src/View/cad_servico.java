@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,13 +52,15 @@ public final class cad_servico extends javax.swing.JFrame {
         ClienteController oCli = new ClienteController();
 
         List<ClienteClass> lista_cliente = oCli.listarClien(CLIENCLASS);
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
         int i = 0;
         while (i <= lista_cliente.size() - 1) {
 
-            cli_descricao_combo.addItem(lista_cliente.get(i).getCli_descricao());
+            model.addElement(new ComboItem(lista_cliente.get(i).getCli_descricao(),
+            Integer.toString(lista_cliente.get(i).getCli_codigo())));
             i++;
         }
-
+        cli_descricao_combo.setModel(model);
     }
 
     public void preenche_tps_descricao_combo() throws SQLException {
@@ -345,7 +348,8 @@ public final class cad_servico extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        Object item = cli_descricao_combo.getSelectedItem();
+        JOptionPane.showMessageDialog(this, ((ComboItem) item).getValue());
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
