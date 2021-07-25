@@ -74,7 +74,7 @@ public class TipoPagamentoModel {
         if (TPPC.getTpp_descricao() != null && !TPPC.getTpp_descricao().isEmpty()) {
             query = query + " and tpp_descricao LIKE '%" + TPPC.getTpp_descricao() + "%'";
         }
-        query = query + " ORDER BY tpp_descricao ";
+        query = query + " ORDER BY tpp_descricao DESC";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();

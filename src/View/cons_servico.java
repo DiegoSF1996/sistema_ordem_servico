@@ -5,6 +5,23 @@
  */
 package View;
 
+import Controller.ClienteController;
+import Controller.ServicoController;
+import Controller.TipoServicoController;
+import classes.ClienteClass;
+import classes.ServicoClass;
+import classes.TipoServicoClass;
+import helpers.ComboItem;
+import static java.lang.Integer.parseInt;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 /**
  *
  * @author CASA
@@ -14,8 +31,91 @@ public class cons_servico extends javax.swing.JFrame {
     /**
      * Creates new form cons_servico
      */
-    public cons_servico() {
+    private final ServicoController controller;
+    private final ClienteController CliController = new ClienteController();
+
+    public cons_servico() throws SQLException {
         initComponents();
+
+        controller = new ServicoController();
+        preenche_tipo_cliente_combo();
+        preenche_tps_descricao_combo();
+
+        TableColumnModel columnModel = jTable1.getColumnModel();
+        /* columnModel.getColumn(0).setPreferredWidth(80);
+        columnModel.getColumn(0).setMaxWidth(80); */
+
+        columnModel.getColumn(0).setMinWidth(0);
+        columnModel.getColumn(0).setMaxWidth(0);
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(1).setMaxWidth(Integer.MAX_VALUE);
+    }
+
+    public void preenche_tipo_cliente_combo() throws SQLException {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement(new ComboItem("Todos", "0"));
+        model.addElement(new ComboItem("Pessoa Física", "1"));
+        model.addElement(new ComboItem("Pessoa Jurídica", "2"));
+
+        tipo_cliente_combo.setModel(model);
+        AutoCompleteDecorator.decorate(tipo_cliente_combo);
+    }
+
+    public void preenche_tps_descricao_combo() throws SQLException {
+        TipoServicoClass TPSCLASS = new TipoServicoClass();
+        TipoServicoController oTPS = new TipoServicoController();
+
+        List<TipoServicoClass> lista_tipo_servico = oTPS.listarTPP(TPSCLASS);
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        int i = 0;
+        model.addElement("");
+        while (i <= lista_tipo_servico.size() - 1) {
+            model.addElement(new ComboItem(lista_tipo_servico.get(i).getTps_descricao(),
+                    Integer.toString(lista_tipo_servico.get(i).getTps_codigo())));
+
+            i++;
+        }
+        tps_descricao_combo.setModel(model);
+        AutoCompleteDecorator.decorate(tps_descricao_combo);
+
+    }
+
+    public void listarTabela() throws SQLException {
+        ClienteClass CliClass = new ClienteClass();
+
+        ServicoClass ServicoClass = new ServicoClass();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        tableModel.setNumRows(0);
+        List<ServicoClass> list = controller.listarServico(ServicoClass);
+        for (ServicoClass serv : list) {
+            CliClass.setCli_codigo(serv.getCli_codigo());
+            ClienteClass CliClassController = CliController.obterPorPk(CliClass);
+            tableModel.addRow(new Object[]{serv.getSer_codigo(),
+                CliClassController.getCli_descricao(),
+                serv.getSer_marca(),
+                serv.getSer_modelo()});
+        }
+
+        jTable1.setModel(tableModel);
+    }
+
+    public void listarTabela(ServicoClass ServicoClass) throws SQLException {
+        ClienteClass CliClass = new ClienteClass();
+        ClienteClass CliClassController = new ClienteClass();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        tableModel.setNumRows(0);
+        List<ServicoClass> list = controller.listarServico(ServicoClass);
+        for (ServicoClass serv : list) {
+            CliClass.setCli_codigo(serv.getCli_codigo());
+            CliClassController = CliController.obterPorPk(CliClass);
+            System.out.println(CliClassController.getCli_descricao());
+            tableModel.addRow(new Object[]{serv.getSer_codigo(),
+                CliClassController.getCli_descricao(),
+                serv.getSer_marca(),
+                serv.getSer_modelo()});
+        }
+
+        jTable1.setModel(tableModel);
     }
 
     /**
@@ -27,22 +127,186 @@ public class cons_servico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
+        tipo_cliente_combo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        tps_descricao_combo = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CONSULTA SERVIÇO");
+
+        tipo_cliente_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipo_cliente_comboActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("TIPO CLIENTE");
+
+        jLabel2.setText("DESCRIÇÃO CLIENTE");
+
+        jLabel3.setText("TIPO DE SERVIÇO");
+
+        jButton2.setText("PESQUISAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "COD", "CLIENTE", "MARCA", "MODELO"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setColumnSelectionAllowed(true);
+        jTable1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jTable1ComponentShown(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("ALTERAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("EXCLUIR");
+
+        jButton4.setText("IMPRIMIR");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextField1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(tipo_cliente_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(tps_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tipo_cliente_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tps_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTable1ComponentShown
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1ComponentShown
+
+    private void tipo_cliente_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipo_cliente_comboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipo_cliente_comboActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            // TODO add your handling code here:
+
+            ServicoClass ServicoClass = new ServicoClass();
+            if (!tps_descricao_combo.getSelectedItem().toString().isEmpty()) {
+                Object item_tps_descricao = tps_descricao_combo.getSelectedItem();
+                ServicoClass.setTps_codigo(parseInt(((ComboItem) item_tps_descricao).getValue()));
+            }
+            this.listarTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        int i = jTable1.getSelectedRow();
+
+        if (i >= 0) {
+            ServicoClass SERVCLASS = new ServicoClass();
+            SERVCLASS.setSer_codigo((int) tableModel.getValueAt(i, 0));
+            cad_servico cadSer = null;
+            try {
+                cadSer = new cad_servico(SERVCLASS, this);
+                cadSer.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(cons_cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        // TODO add your handling code h
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -74,11 +338,27 @@ public class cons_servico extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new cons_servico().setVisible(true);
+                try {
+                    new cons_servico().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> tipo_cliente_combo;
+    private javax.swing.JComboBox<String> tps_descricao_combo;
     // End of variables declaration//GEN-END:variables
 }

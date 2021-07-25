@@ -72,7 +72,7 @@ public class TipoServicoModel {
         if (TPSC.getTps_descricao() != null && !TPSC.getTps_descricao().isEmpty()) {
             query = query + " and tps_descricao LIKE  '%" + TPSC.getTps_descricao() + "%'";
         }
-        query = query + " ORDER BY tps_descricao ";
+        query = query + " ORDER BY tps_descricao DESC";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();

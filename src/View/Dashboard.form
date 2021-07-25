@@ -26,11 +26,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuPesquisaServicoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MenuHistoricoServico">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="HIST&#xd3;RICO DE SERVI&#xc7;OS"/>
-              </Properties>
-            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuAdministrativo">

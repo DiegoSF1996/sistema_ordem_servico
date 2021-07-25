@@ -32,7 +32,7 @@ public class cons_cliente extends javax.swing.JFrame {
     public cons_cliente() throws SQLException {
         initComponents();
         controller = new ClienteController();
-        this.listarTabela();
+       
 
         TableColumnModel columnModel = jTable1.getColumnModel();
         /* columnModel.getColumn(0).setPreferredWidth(80);
@@ -361,8 +361,10 @@ public void listarTabela() throws SQLException {
         DefaultTableModel tableModel = (DefaultTableModel) this.getjTable1().getModel();
         tableModel.setNumRows(0);
         List<ClienteClass> list = controller.listarClien(ClienClass);
-        for (ClienteClass cli : list) {
-            tableModel.addRow(new Object[]{cli.getCli_codigo(), cli.getCli_descricao()});
+         for (ClienteClass clien : list) {
+            tableModel.addRow(new Object[]{clien.getCli_codigo(),
+                clien.getCli_descricao(), clien.getCli_endereco(),
+                clien.getCli_email(), clien.getCli_telefone()});
         }
     }
 }

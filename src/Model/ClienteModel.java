@@ -115,9 +115,12 @@ public class ClienteModel {
         if (CLIENCLASS.getCli_descricao() != null && !CLIENCLASS.getCli_descricao().isEmpty()) {
             query = query + " and cli_descricao LIKE '%" + CLIENCLASS.getCli_descricao() + "%'";
         }
-        query = query + " ORDER BY cli_descricao ";
+        if (CLIENCLASS.getCli_pj() != null ) {
+            query = query + " and cli_pj = '" + CLIENCLASS.getCli_pj()+"'" ;
+        }
+        query = query + " ORDER BY cli_descricao DESC";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
-
+        
         ResultSet rs = pstmt.executeQuery();
 
         List<ClienteClass> ACLIENCLASS = new ArrayList<ClienteClass>();

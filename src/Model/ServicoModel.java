@@ -5,7 +5,16 @@
  */
 package Model;
 
-import java.util.Date;
+import classes.ServicoClass;
+import java.sql.Array;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -13,115 +22,198 @@ import java.util.Date;
  */
 public class ServicoModel {
 
-    private int ser_codigo;
-    private int cli_codigo;
-    private int tps_codigo;
-    private int tpp_codigo;
-    private String ser_marca;
+    private String table = "servico";
+    private final DB db = new DB();
+    public ArrayList<ServicoClass> ASERVICLASS = new ArrayList<ServicoClass>();
 
-    private String ser_numeroserie;
-    private String ser_modelo;
-    private Date ser_entrada;
-    private Date ser_datasaida;
-    private Date ser_datapagamento;
-    private float ser_valorpagamento;
-    private String ser_observacao;
-    
-  public ServicoModel( int cli_codigo, int tps_codigo, int tpp_codigo, Date ser_entrada) {
-       
-        this.cli_codigo = cli_codigo;
-        this.tps_codigo = tps_codigo;
-        this.tpp_codigo = tpp_codigo;
-        this.ser_entrada = ser_entrada;
-    }
-  
-    public int getCli_codigo() {
-        return cli_codigo;
-    }
+    public boolean insert(ServicoClass SERVICLASS) throws SQLException, ParseException {
 
-    public void setCli_codigo(int cli_codigo) {
-        this.cli_codigo = cli_codigo;
-    }
+        PreparedStatement pstmt = db.getConexao().prepareStatement("INSERT INTO " + table + ""
+                + " (cli_codigo, tps_codigo, tpp_codigo, tpprod_codigo, ser_marca, "
+                + "ser_numeroserie, ser_modelo, ser_dataentrada, ser_datasaida, ser_datapagamento, "
+                + "ser_valorpagamento, ser_observacao, ser_externo)" + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-    public int getTps_codigo() {
-        return tps_codigo;
-    }
+        if (SERVICLASS.getCli_codigo() > 0) {
+            pstmt.setInt(1, SERVICLASS.getCli_codigo());
+        }
+        if (SERVICLASS.getTps_codigo() != 0) {
+            pstmt.setInt(2, SERVICLASS.getTps_codigo());
+        } else {
+        }
+        if (SERVICLASS.getTpp_codigo() > 0) {
+            pstmt.setInt(3, SERVICLASS.getTpp_codigo());
+        }
+        if (SERVICLASS.getTpprod_codigo() > 0) {
+            pstmt.setInt(4, SERVICLASS.getTpprod_codigo());
+        }
+        if (SERVICLASS.getSer_marca() != null) {
+            pstmt.setString(5, SERVICLASS.getSer_marca());
+        }
+        if (SERVICLASS.getSer_numeroserie() != null) {
+            pstmt.setString(6, SERVICLASS.getSer_numeroserie());
+        }
+        if (SERVICLASS.getSer_modelo() != null) {
+            pstmt.setString(7, SERVICLASS.getSer_modelo());
+        }
+        if (SERVICLASS.getSer_dataentrada() != null) {
+            pstmt.setString(8, SERVICLASS.getSer_dataentrada());
+        }
+        if (SERVICLASS.getSer_datasaida() != null) {
+            pstmt.setString(9, SERVICLASS.getSer_datasaida());
+        }
+        if (SERVICLASS.getSer_datapagamento() != null) {
+            pstmt.setString(10, SERVICLASS.getSer_datapagamento());
+        }
+        if (SERVICLASS.getSer_valorpagamento() >= 0) {
+            pstmt.setFloat(11, SERVICLASS.getSer_valorpagamento());
+        }
+        if (SERVICLASS.getSer_observacao() != null) {
+            pstmt.setString(12, SERVICLASS.getSer_observacao());
+        }
+        if (SERVICLASS.getSer_externo() != null) {
+            pstmt.setBoolean(13, SERVICLASS.getSer_externo());
+        }
+        System.out.println(SERVICLASS.getTps_codigo());
+        int registros = pstmt.executeUpdate();
+        pstmt.close();// fecha a db
+        if (registros == 1) {
+            return true;
 
-    public void setTps_codigo(int tps_codigo) {
-        this.tps_codigo = tps_codigo;
-    }
+        }
+        return false;
 
-    public int getTpp_codigo() {
-        return tpp_codigo;
-    }
-
-    public void setTpp_codigo(int tpp_codigo) {
-        this.tpp_codigo = tpp_codigo;
-    }
-
-    public String getSer_marca() {
-        return ser_marca;
-    }
-
-    public void setSer_marca(String ser_marca) {
-        this.ser_marca = ser_marca;
-    }
-
-    public String getSer_numeroserie() {
-        return ser_numeroserie;
-    }
-
-    public void setSer_numeroserie(String ser_numeroserie) {
-        this.ser_numeroserie = ser_numeroserie;
-    }
-
-    public String getSer_modelo() {
-        return ser_modelo;
     }
 
-    public void setSer_modelo(String ser_modelo) {
-        this.ser_modelo = ser_modelo;
+    public boolean update(ServicoClass SERVICLASS) throws SQLException {
+
+        String query = "UPDATE " + table + " SET ";
+
+        if (SERVICLASS.getCli_descricao() != null) {
+
+            query += " cli_descricao = '" + SERVICLASS.getCli_descricao() + "' ,";
+        }
+        if (SERVICLASS.getCli_endereco() != null) {
+
+            query += " cli_endereco = '" + SERVICLASS.getCli_endereco() + "',";
+        }
+        if (SERVICLASS.getCli_bairro() != null) {
+
+            query += " cli_bairro = '" + SERVICLASS.getCli_bairro() + "' ,";
+        }
+        if (SERVICLASS.getCli_cep() != null) {
+
+            query += "  cli_cep = '" + SERVICLASS.getCli_cep() + "' ,";
+        }
+        if (SERVICLASS.getCli_telefone() != null) {
+
+            query += " cli_telefone = '" + SERVICLASS.getCli_telefone() + "' ,";
+        }
+        if (SERVICLASS.getCli_pj() != null) {
+
+            query += " cli_pj = '" + SERVICLASS.getCli_pj() + "' ,";
+        }
+        if (SERVICLASS.getCli_email() != null) {
+
+            query += " cli_email = '" + SERVICLASS.getCli_email() + "'";
+        }
+
+        if (SERVICLASS.getCli_codigo() > 0) {
+
+            query += " where cli_codigo = " + SERVICLASS.getCli_codigo();
+        }
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+        int registros = pstmt.executeUpdate();
+        pstmt.close();// fecha a db
+        if (registros == 1) {
+            return true;
+
+        }
+        return false;
+
     }
 
-    public Date getSer_entrada() {
-        return ser_entrada;
+    public List obter(ServicoClass SERVICLASS) throws SQLException {
+        String query = "select * from " + table + " where 1=1 ";
+        if (SERVICLASS.getCli_codigo() != 0) {
+            query = query + " and cli_codigo = " + SERVICLASS.getCli_codigo();
+        }
+
+        query = query + " ORDER BY ser_codigo DESC ";
+        System.out.println(query);
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        List<ServicoClass> ASERVICLASS = new ArrayList<ServicoClass>();
+        while (rs.next()) {
+            ServicoClass TPPSalvar = new ServicoClass();
+            TPPSalvar.setSer_codigo(rs.getInt("ser_codigo"));
+            TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
+            TPPSalvar.setTps_codigo(rs.getInt("tps_codigo"));
+            TPPSalvar.setTpp_codigo(rs.getInt("tpp_codigo"));
+            TPPSalvar.setSer_marca(rs.getString("ser_marca"));
+            TPPSalvar.setSer_numeroserie(rs.getString("ser_numeroserie"));
+            TPPSalvar.setSer_modelo(rs.getString("ser_modelo"));
+            TPPSalvar.setSer_dataentrada(rs.getString("ser_dataentrada"));
+            TPPSalvar.setSer_datasaida(rs.getString("ser_datasaida"));
+            TPPSalvar.setSer_datapagamento(rs.getString("ser_datapagamento"));
+            TPPSalvar.setSer_valorpagamento(rs.getFloat("ser_valorpagamento"));
+            TPPSalvar.setSer_externo(rs.getBoolean("ser_externo"));
+            TPPSalvar.setSer_observacao(rs.getString("ser_observacao"));
+            TPPSalvar.setTpprod_codigo(rs.getInt("tpprod_codigo"));
+            ASERVICLASS.add(TPPSalvar);
+
+        }
+
+        pstmt.close();
+
+        return ASERVICLASS;
     }
 
-    public void setSer_entrada(Date ser_entrada) {
-        this.ser_entrada = ser_entrada;
+    public void excluir(ServicoClass SERVICLASS) throws SQLException {
+        String query = "delete from " + table + " where 1=1 ";
+
+        if (SERVICLASS.getCli_codigo() != 0) {
+            query = query + " and  cli_codigo = " + SERVICLASS.getCli_codigo();
+        }
+        if (SERVICLASS.getCli_descricao() != null) {
+            query = query + " and cli_descricao = " + SERVICLASS.getCli_descricao();
+        }
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+        pstmt.execute();
     }
 
-    public Date getSer_datasaida() {
-        return ser_datasaida;
+    public ServicoClass obterPorPk(ServicoClass SERVICLASS) throws SQLException {
+
+        String query = "select * from " + table + " where 1=1 ";
+        if (SERVICLASS.getCli_codigo() != 0) {
+            query = query + " and ser_codigo = " + SERVICLASS.getSer_codigo();
+        }
+
+        PreparedStatement pstmt = db.getConexao().prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+        ServicoClass TPPSalvar = new ServicoClass();
+        while (rs.next()) {
+            TPPSalvar.setSer_codigo(rs.getInt("ser_codigo"));
+            TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
+            TPPSalvar.setTps_codigo(rs.getInt("tps_codigo"));
+            TPPSalvar.setTpp_codigo(rs.getInt("tpp_codigo"));
+            TPPSalvar.setSer_marca(rs.getString("ser_marca"));
+            TPPSalvar.setSer_numeroserie(rs.getString("ser_numeroserie"));
+            TPPSalvar.setSer_modelo(rs.getString("ser_modelo"));
+            TPPSalvar.setSer_dataentrada(rs.getString("ser_dataentrada"));
+            TPPSalvar.setSer_datasaida(rs.getString("ser_datasaida"));
+            TPPSalvar.setSer_datapagamento(rs.getString("ser_datapagamento"));
+            TPPSalvar.setSer_valorpagamento(rs.getFloat("ser_valorpagamento"));
+            TPPSalvar.setSer_externo(rs.getBoolean("ser_externo"));
+            TPPSalvar.setSer_observacao(rs.getString("ser_observacao"));
+            TPPSalvar.setTpprod_codigo(rs.getInt("tpprod_codigo"));
+            ASERVICLASS.add(TPPSalvar);
+            
+        }
+        return TPPSalvar;
+
     }
 
-    public void setSer_datasaida(Date ser_datasaida) {
-        this.ser_datasaida = ser_datasaida;
-    }
-
-    public Date getSer_datapagamento() {
-        return ser_datapagamento;
-    }
-
-    public void setSer_datapagamento(Date ser_datapagamento) {
-        this.ser_datapagamento = ser_datapagamento;
-    }
-
-    public float getSer_valorpagamento() {
-        return ser_valorpagamento;
-    }
-
-    public void setSer_valorpagamento(float ser_valorpagamento) {
-        this.ser_valorpagamento = ser_valorpagamento;
-    }
-
-    public String getSer_observacao() {
-        return ser_observacao;
-    }
-
-    public void setSer_observacao(String ser_observacao) {
-        this.ser_observacao = ser_observacao;
-    }
-
-  
 }

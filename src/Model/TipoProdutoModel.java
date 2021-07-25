@@ -74,7 +74,7 @@ public class TipoProdutoModel {
         if (TPPRODC.tpprod_descricao != null && !TPPRODC.tpprod_descricao.isEmpty()) {
             query = query + " and tpprod_descricao LIKE '%" + TPPRODC.tpprod_descricao + "%'";
         }
-        query = query + " ORDER BY tpprod_descricao ";
+        query = query + " ORDER BY tpprod_descricao DESC";
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();

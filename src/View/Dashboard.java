@@ -37,7 +37,6 @@ public class Dashboard extends javax.swing.JFrame {
         MenuServico = new javax.swing.JMenu();
         MenuNovoServico = new javax.swing.JMenuItem();
         MenuPesquisaServico = new javax.swing.JMenuItem();
-        MenuHistoricoServico = new javax.swing.JMenuItem();
         MenuAdministrativo = new javax.swing.JMenu();
         MenuClientes = new javax.swing.JMenuItem();
         MenuTipoServico = new javax.swing.JMenuItem();
@@ -74,9 +73,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         MenuServico.add(MenuPesquisaServico);
-
-        MenuHistoricoServico.setText("HISTÓRICO DE SERVIÇOS");
-        MenuServico.add(MenuHistoricoServico);
 
         jMenuBar1.add(MenuServico);
 
@@ -148,6 +144,9 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void MenuPesquisaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPesquisaServicoActionPerformed
         // TODO add your handling code here:
+        cons_servico cons_servico ;
+        cons_servico = new cons_servico();
+        cons_servico.setVisible(true);
     }//GEN-LAST:event_MenuPesquisaServicoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -256,7 +255,6 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdministrativo;
     private javax.swing.JMenuItem MenuClientes;
-    private javax.swing.JMenuItem MenuHistoricoServico;
     private javax.swing.JMenuItem MenuNovoServico;
     private javax.swing.JMenuItem MenuPesquisaServico;
     private javax.swing.JMenu MenuServico;

@@ -53,7 +53,6 @@ public class cad_cliente extends javax.swing.JFrame {
         cli_cep.setText(oCliente.getCli_cep());
         cli_telefone.setText(oCliente.getCli_telefone());
         cli_email.setText(oCliente.getCli_email());
-        System.out.println(oCliente.getCli_pj());
         if (oCliente.getCli_pj() == true) {
             cli_pj.setSelected(true);
         }
