@@ -88,39 +88,81 @@ public class ServicoModel {
 
         String query = "UPDATE " + table + " SET ";
 
-        if (SERVICLASS.getCli_descricao() != null) {
-
-            query += " cli_descricao = '" + SERVICLASS.getCli_descricao() + "' ,";
-        }
-        if (SERVICLASS.getCli_endereco() != null) {
-
-            query += " cli_endereco = '" + SERVICLASS.getCli_endereco() + "',";
-        }
-        if (SERVICLASS.getCli_bairro() != null) {
-
-            query += " cli_bairro = '" + SERVICLASS.getCli_bairro() + "' ,";
-        }
-        if (SERVICLASS.getCli_cep() != null) {
-
-            query += "  cli_cep = '" + SERVICLASS.getCli_cep() + "' ,";
-        }
-        if (SERVICLASS.getCli_telefone() != null) {
-
-            query += " cli_telefone = '" + SERVICLASS.getCli_telefone() + "' ,";
-        }
-        if (SERVICLASS.getCli_pj() != null) {
-
-            query += " cli_pj = '" + SERVICLASS.getCli_pj() + "' ,";
-        }
-        if (SERVICLASS.getCli_email() != null) {
-
-            query += " cli_email = '" + SERVICLASS.getCli_email() + "'";
-        }
-
+       
         if (SERVICLASS.getCli_codigo() > 0) {
 
-            query += " where cli_codigo = " + SERVICLASS.getCli_codigo();
+            query += "cli_codigo = '" + SERVICLASS.getCli_codigo() + "' ,";
         }
+        if (SERVICLASS.getTps_codigo() > 0) {
+
+            query += "tps_codigo = '" + SERVICLASS.getTps_codigo() + "' ,";
+        }
+        if (SERVICLASS.getTpp_codigo() > 0) {
+
+            query += "tpp_codigo = '" + SERVICLASS.getTpp_codigo() + "' ,";
+        }
+        if (SERVICLASS.getTpprod_codigo() > 0) {
+
+            query += "tpprod_codigo = '" + SERVICLASS.getTpprod_codigo() + "' ,";
+        }
+        if (SERVICLASS.getSer_marca() != null) {
+
+            query += "ser_marca = '" + SERVICLASS.getSer_marca() + "' ,";
+        }
+        if (SERVICLASS.getSer_numeroserie() != null) {
+
+            query += "ser_numeroserie = '" + SERVICLASS.getSer_numeroserie() + "' ,";
+        }
+        if (SERVICLASS.getSer_modelo() != null) {
+
+            query += "ser_modelo = '" + SERVICLASS.getSer_modelo() + "' ,";
+        }
+        if (SERVICLASS.getSer_externo() != null) {
+            int marcado = 0;
+            if(SERVICLASS.getSer_externo() == true ){
+                marcado = 1;
+            }
+            query += "ser_externo = " + marcado + " ,";
+        }
+        if (SERVICLASS.getSer_dataentrada() != null) {
+
+            query += "ser_dataentrada = '" + SERVICLASS.getSer_dataentrada() + "' ,";
+        }
+        if (SERVICLASS.getSer_datasaida() != null) {
+
+            query += "ser_datasaida = '" + SERVICLASS.getSer_datasaida() + "' ,";
+        }
+        if (SERVICLASS.getSer_datapagamento() != null) {
+
+            query += "ser_datapagamento = '" + SERVICLASS.getSer_datapagamento() + "' ,";
+        }
+
+        if (SERVICLASS.getSer_dataentrada_formatada() != null) {
+
+            query += "ser_dataentrada_formatada = '" + SERVICLASS.getSer_dataentrada_formatada() + "' ,";
+        }
+        if (SERVICLASS.getSer_datasaida_formatada() != null) {
+
+            query += "ser_datasaida_formatada = '" + SERVICLASS.getSer_datasaida_formatada() + "' ,";
+        }
+        if (SERVICLASS.getSer_datapagamento_formatada() != null) {
+
+            query += "ser_datapagamento_formatada = '" + SERVICLASS.getSer_datapagamento_formatada() + "' ,";
+        }
+
+        if (SERVICLASS.getSer_valorpagamento() > 0) {
+
+            query += "ser_valorpagamento = '" + SERVICLASS.getSer_valorpagamento() + "' ,";
+        }
+        if (SERVICLASS.getSer_observacao() != null) {
+
+            query += "ser_observacao = '" + SERVICLASS.getSer_observacao() + "'";
+        }
+         if (SERVICLASS.getSer_codigo() > 0) {
+
+            query += " where ser_codigo = " + SERVICLASS.getSer_codigo();
+        }
+         System.out.println(query);
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -173,12 +215,10 @@ public class ServicoModel {
     public void excluir(ServicoClass SERVICLASS) throws SQLException {
         String query = "delete from " + table + " where 1=1 ";
 
-        if (SERVICLASS.getCli_codigo() != 0) {
-            query = query + " and  cli_codigo = " + SERVICLASS.getCli_codigo();
+        if (SERVICLASS.getSer_codigo() != 0) {
+            query = query + " and  ser_codigo = " + SERVICLASS.getSer_codigo();
         }
-        if (SERVICLASS.getCli_descricao() != null) {
-            query = query + " and cli_descricao = " + SERVICLASS.getCli_descricao();
-        }
+
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         pstmt.execute();
     }
@@ -207,10 +247,12 @@ public class ServicoModel {
             TPPSalvar.setSer_datapagamento(rs.getString("ser_datapagamento"));
             TPPSalvar.setSer_valorpagamento(rs.getFloat("ser_valorpagamento"));
             TPPSalvar.setSer_externo(rs.getBoolean("ser_externo"));
+            
+            System.out.println("adasdsadasdasdasdasdsad " +rs.getInt("ser_externo"));
             TPPSalvar.setSer_observacao(rs.getString("ser_observacao"));
             TPPSalvar.setTpprod_codigo(rs.getInt("tpprod_codigo"));
             ASERVICLASS.add(TPPSalvar);
-            
+
         }
         return TPPSalvar;
 

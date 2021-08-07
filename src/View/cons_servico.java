@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -200,7 +201,12 @@ public class cons_servico extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("EXCLUIR");
+        jButton3.setText("APAGAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("IMPRIMIR");
 
@@ -307,6 +313,33 @@ public class cons_servico extends javax.swing.JFrame {
         }
         // TODO add your handling code h
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        int i = jTable1.getSelectedRow();
+        if (i >= 0) {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
+
+            if (dialogResult == JOptionPane.YES_OPTION) {
+
+                ServicoClass SERVICLASS = new ServicoClass();
+                SERVICLASS.setSer_codigo((int) tableModel.getValueAt(i, 0));
+              
+                try {
+                    controller.excluir(SERVICLASS);
+                } catch (SQLException ex) {
+                    Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
+                }
+             
+
+                tableModel.removeRow(i);
+            }
+
+        }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

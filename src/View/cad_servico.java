@@ -38,6 +38,7 @@ import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.util.converter.DoubleStringConverter;
+import javax.swing.ButtonModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -60,6 +61,7 @@ public final class cad_servico extends javax.swing.JFrame {
         ids[1] = -1;
         ids[2] = -1;
         ids[3] = -1;
+        this.SC = new ServicoClass();
         preenche_todos_combos(ids);
 
     }
@@ -78,6 +80,12 @@ public final class cad_servico extends javax.swing.JFrame {
         ser_datasaida.setText(oServico.getSer_datasaida());
         ser_datapagamento.setText(oServico.getSer_datapagamento());
         ser_valorpagamento.setText(Float.toString(oServico.getSer_valorpagamento()));
+        System.out.println("adsadsadasdas " + oServico.getSer_externo());
+        boolean estado_checkbox = false;
+        if (oServico.getSer_externo() == true) {
+            estado_checkbox = true;
+        }
+        ser_externo.setSelected(estado_checkbox);
         ser_observacao.setText(oServico.getSer_observacao());
 
         this.consClien = consServ;
@@ -101,8 +109,9 @@ public final class cad_servico extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 Object item_tipo_cliente = tipo_cliente_combo.getSelectedItem();
                 int tipo_cliente_codigo = BasisLibrary.stringToInt(((ComboItem) item_tipo_cliente).getValue());
+
                 try {
-                    preenche_cli_descricao_combo(tipo_cliente_codigo,ids[0]);
+                    preenche_cli_descricao_combo(tipo_cliente_codigo, ids[0]);
                 } catch (SQLException ex) {
                     Logger.getLogger(cad_servico.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -141,10 +150,11 @@ public final class cad_servico extends javax.swing.JFrame {
             Object combo = new ComboItem(lista_cliente.get(i).getCli_descricao(),
                     Integer.toString(lista_cliente.get(i).getCli_codigo()));
             model.addElement(combo);
-           if (cli_codigo == lista_cliente.get(i).getCli_codigo()) {
+            if (cli_codigo == lista_cliente.get(i).getCli_codigo()) {
                 //model.setSelectedItem(combo);
                 obj = combo;
-           }
+                System.out.println("cli_codigo: "+cli_codigo);
+            }
             i++;
         }
         cli_descricao_combo.setModel(model);
@@ -160,15 +170,19 @@ public final class cad_servico extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         int i = 0;
         model.addElement("");
+        Object obj = null;
         while (i <= lista_tipo_servico.size() - 1) {
-            model.addElement(new ComboItem(lista_tipo_servico.get(i).getTps_descricao(),
-                    Integer.toString(lista_tipo_servico.get(i).getTps_codigo())));
+            Object combo = new ComboItem(lista_tipo_servico.get(i).getTps_descricao(),
+                    Integer.toString(lista_tipo_servico.get(i).getTps_codigo()));
+            model.addElement(combo);
             if (tps_codigo == lista_tipo_servico.get(i).getTps_codigo()) {
-                model.setSelectedItem(lista_tipo_servico.get(i).getTps_descricao());
+                obj = combo;
+                System.out.println("tps_codigo: "+tps_codigo);
             }
             i++;
         }
         tps_descricao_combo.setModel(model);
+        tps_descricao_combo.setSelectedItem(obj);
         AutoCompleteDecorator.decorate(tps_descricao_combo);
 
     }
@@ -181,15 +195,20 @@ public final class cad_servico extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         int i = 0;
         model.addElement("");
+        Object obj = null;
         while (i <= lista_tipo_produto.size() - 1) {
-            model.addElement(new ComboItem(lista_tipo_produto.get(i).getTpprod_descricao(),
-                    Integer.toString(lista_tipo_produto.get(i).getTpprod_codigo())));
+            Object combo = new ComboItem(lista_tipo_produto.get(i).getTpprod_descricao(),
+                    Integer.toString(lista_tipo_produto.get(i).getTpprod_codigo()));
+            model.addElement(combo);
             if (tpprod_codigo == lista_tipo_produto.get(i).getTpprod_codigo()) {
-                model.setSelectedItem(lista_tipo_produto.get(i).getTpprod_descricao());
+                obj = combo;
+                
+                System.out.println("tpprod_codigo: "+tpprod_codigo);
             }
             i++;
         }
         tpprod_descricao_combo.setModel(model);
+        tpprod_descricao_combo.setSelectedItem(obj);
         AutoCompleteDecorator.decorate(tpprod_descricao_combo);
     }
 
@@ -201,15 +220,19 @@ public final class cad_servico extends javax.swing.JFrame {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         int i = 0;
         model.addElement("");
+        Object obj = null;
         while (i <= lista_tipo_pagamento.size() - 1) {
-            model.addElement(new ComboItem(lista_tipo_pagamento.get(i).getTpp_descricao(),
-                    Integer.toString(lista_tipo_pagamento.get(i).getTpp_codigo())));
+            Object combo = new ComboItem(lista_tipo_pagamento.get(i).getTpp_descricao(),
+                    Integer.toString(lista_tipo_pagamento.get(i).getTpp_codigo()));
+            model.addElement(combo);
             if (tpp_codigo == lista_tipo_pagamento.get(i).getTpp_codigo()) {
-                model.setSelectedItem(lista_tipo_pagamento.get(i).getTpp_descricao());
+                obj = combo;
+                System.out.println("tpp_codigo: "+tpp_codigo);
             }
             i++;
         }
         tpp_descricao_combo.setModel(model);
+        tpp_descricao_combo.setSelectedItem(obj);
         AutoCompleteDecorator.decorate(tpp_descricao_combo);
     }
 
@@ -328,6 +351,12 @@ public final class cad_servico extends javax.swing.JFrame {
 
         jLabel12.setText("TIPO DE APARELHO");
 
+        tps_descricao_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tps_descricao_comboActionPerformed(evt);
+            }
+        });
+
         jLabel13.setText("TIPO CLIENTE");
 
         tipo_cliente_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -423,7 +452,6 @@ public final class cad_servico extends javax.swing.JFrame {
                         .addComponent(ser_marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(tpprod_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -456,9 +484,9 @@ public final class cad_servico extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -496,6 +524,7 @@ public final class cad_servico extends javax.swing.JFrame {
             SERVICOMODELO.setCli_codigo(parseInt(((ComboItem) item_cli_descricao).getValue()));
         }
         if (!tps_descricao_combo.getSelectedItem().toString().isEmpty()) {
+            
             SERVICOMODELO.setTps_codigo(parseInt(((ComboItem) item_tps_descricao).getValue()));
         } else {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
@@ -524,6 +553,9 @@ public final class cad_servico extends javax.swing.JFrame {
             SERVICOMODELO.setSer_valorpagamento(Float.parseFloat(ser_valorpagamento.getText()));
         }
 
+        if (this.SC.getSer_codigo() > 0) {
+            SERVICOMODELO.setSer_codigo(this.SC.getSer_codigo());
+        }
         try {
             oServicoController.salvar(SERVICOMODELO);
         } catch (SQLException | ParseException ex) {
@@ -531,6 +563,10 @@ public final class cad_servico extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tps_descricao_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tps_descricao_comboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tps_descricao_comboActionPerformed
 
     /**
      * @param args the command line arguments
