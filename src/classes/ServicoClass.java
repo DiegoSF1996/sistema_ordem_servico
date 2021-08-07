@@ -28,6 +28,7 @@ public final class ServicoClass {
     private String ser_dataentrada;
     private String ser_datasaida;
     private String ser_datapagamento;
+    private String cli_descricao;
 
     private Date ser_dataentrada_formatada;
     private Date ser_datasaida_formatada;
@@ -206,4 +207,11 @@ public final class ServicoClass {
         this.ser_observacao = ser_observacao;
     }
 
+    public String getCli_descricao() {
+        return cli_descricao;
+    }
+
+    public void setCli_descricao(String cli_descricao) {
+        this.cli_descricao = cli_descricao;
+    }
 }

@@ -175,12 +175,15 @@ public class ServicoModel {
     }
 
     public List obter(ServicoClass SERVICLASS) throws SQLException {
-        String query = "select * from " + table + " where 1=1 ";
+        String query = "SELECT serv.*, cli.cli_descricao from servico as serv JOIN cliente as cli"
+                + " on serv.cli_codigo = cli.cli_codigo where 1=1 ";
         if (SERVICLASS.getCli_codigo() != 0) {
-            query = query + " and cli_codigo = " + SERVICLASS.getCli_codigo();
+            query = query + " and serv.cli_codigo = " + SERVICLASS.getCli_codigo();
         }
-
-        query = query + " ORDER BY ser_codigo DESC ";
+        if (SERVICLASS.getCli_descricao() != null) {
+            query = query + " and cli.cli_descricao like '%" + SERVICLASS.getCli_descricao()+"%'";
+        }
+        query = query + " ORDER BY serv.ser_codigo DESC ";
         System.out.println(query);
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
@@ -190,6 +193,7 @@ public class ServicoModel {
         while (rs.next()) {
             ServicoClass TPPSalvar = new ServicoClass();
             TPPSalvar.setSer_codigo(rs.getInt("ser_codigo"));
+            TPPSalvar.setCli_descricao(rs.getString("cli_descricao"));
             TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
             TPPSalvar.setTps_codigo(rs.getInt("tps_codigo"));
             TPPSalvar.setTpp_codigo(rs.getInt("tpp_codigo"));

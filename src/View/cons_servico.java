@@ -23,6 +23,23 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPTableHeader;
+import com.itextpdf.text.pdf.PdfWriter;
+import helpers.FileChooserTest;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author CASA
@@ -107,11 +124,8 @@ public class cons_servico extends javax.swing.JFrame {
         tableModel.setNumRows(0);
         List<ServicoClass> list = controller.listarServico(ServicoClass);
         for (ServicoClass serv : list) {
-            CliClass.setCli_codigo(serv.getCli_codigo());
-            CliClassController = CliController.obterPorPk(CliClass);
-            System.out.println(CliClassController.getCli_descricao());
             tableModel.addRow(new Object[]{serv.getSer_codigo(),
-                CliClassController.getCli_descricao(),
+                serv.getCli_descricao(),
                 serv.getSer_marca(),
                 serv.getSer_modelo()});
         }
@@ -128,7 +142,7 @@ public class cons_servico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        cli_descricao_combo = new javax.swing.JTextField();
         tipo_cliente_combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -209,6 +223,11 @@ public class cons_servico extends javax.swing.JFrame {
         });
 
         jButton4.setText("IMPRIMIR");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +237,7 @@ public class cons_servico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1)
+                    .addComponent(cli_descricao_combo)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -255,7 +274,7 @@ public class cons_servico extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cli_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -284,11 +303,17 @@ public class cons_servico extends javax.swing.JFrame {
             // TODO add your handling code here:
 
             ServicoClass ServicoClass = new ServicoClass();
-            if (!tps_descricao_combo.getSelectedItem().toString().isEmpty()) {
+            if (tipo_cliente_combo.getSelectedItem().toString().isEmpty()) {
                 Object item_tps_descricao = tps_descricao_combo.getSelectedItem();
                 ServicoClass.setTps_codigo(parseInt(((ComboItem) item_tps_descricao).getValue()));
             }
-            this.listarTabela();
+            if (!tps_descricao_combo.getSelectedItem().toString().isEmpty()) {
+
+            }
+            if (!cli_descricao_combo.getText().isEmpty()) {
+                ServicoClass.setCli_descricao(cli_descricao_combo.getText());
+            }
+            this.listarTabela(ServicoClass);
         } catch (SQLException ex) {
             Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -316,7 +341,7 @@ public class cons_servico extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         int i = jTable1.getSelectedRow();
         if (i >= 0) {
@@ -326,13 +351,12 @@ public class cons_servico extends javax.swing.JFrame {
 
                 ServicoClass SERVICLASS = new ServicoClass();
                 SERVICLASS.setSer_codigo((int) tableModel.getValueAt(i, 0));
-              
+
                 try {
                     controller.excluir(SERVICLASS);
                 } catch (SQLException ex) {
                     Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
                 }
-             
 
                 tableModel.removeRow(i);
             }
@@ -340,6 +364,76 @@ public class cons_servico extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        String filename = null, dir = null;
+        JFileChooser c = new JFileChooser();
+        // Demonstrate "Open" dialog:
+        int rVal = c.showSaveDialog(cons_servico.this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            filename = c.getSelectedFile().getName();
+            if (!filename.endsWith(".pdf")) {
+                filename += ".pdf";
+            }
+            dir = c.getCurrentDirectory().toString();
+        }
+        if (rVal == JFileChooser.CANCEL_OPTION) {
+            filename = null;
+            dir = null;
+        }
+        Document doc = new Document();
+        doc.setPageSize(PageSize.A4);
+        doc.addSubject("");
+        doc.addKeywords("Ordem de seriço");
+        doc.addCreator("Ordem de seriço");
+        doc.addAuthor("Admin");
+        if (filename != null && dir != null) {
+
+            try {
+                PdfWriter.getInstance(doc, new FileOutputStream(dir + "\\" + filename));
+                doc.open();
+
+                Paragraph p = new Paragraph("ORDEM DE SERVIÇO");
+                p.setAlignment(1);
+                p.setPaddingTop(60);
+                doc.add(p);
+                
+                doc.add(new Paragraph("NOME"));
+                doc.add(new Paragraph("DIEGO"));
+                doc.add(new Paragraph(""));
+                doc.add(new Paragraph("TIPO SERVIÇO"));
+                doc.add(new Paragraph("MANUTENÇÃO PREVENTIVA"));
+                doc.add(new Paragraph(""));
+                doc.add(new Paragraph("TIPO APARELHO"));
+                doc.add(new Paragraph("TV"));
+                PdfPTable table = new PdfPTable(3);
+                PdfPCell cell1 = new PdfPCell(new Paragraph("RG"));
+                PdfPCell cell2 = new PdfPCell(new Paragraph("Nome"));
+                PdfPCell cell3 = new PdfPCell(new Paragraph("Idade"));
+
+                table.addCell(cell1);
+                table.addCell(cell2);
+                table.addCell(cell3);
+
+                cell1 = new PdfPCell(new Paragraph("1207591955"));
+                cell2 = new PdfPCell(new Paragraph("Diego"));
+                cell3 = new PdfPCell(new Paragraph("25"));
+                table.addCell(cell1);
+                table.addCell(cell2);
+                table.addCell(cell3);
+
+                doc.add(table);
+                doc.close();
+                Desktop.getDesktop().open(new File(dir + "\\" + filename));
+            } catch (DocumentException de) {
+                System.err.println(de.getMessage());
+            } catch (IOException ioe) {
+                System.err.println(ioe.getMessage());
+            }
+        }
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,6 +475,7 @@ public class cons_servico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cli_descricao_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -390,7 +485,6 @@ public class cons_servico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> tipo_cliente_combo;
     private javax.swing.JComboBox<String> tps_descricao_combo;
     // End of variables declaration//GEN-END:variables

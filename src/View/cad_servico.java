@@ -153,7 +153,7 @@ public final class cad_servico extends javax.swing.JFrame {
             if (cli_codigo == lista_cliente.get(i).getCli_codigo()) {
                 //model.setSelectedItem(combo);
                 obj = combo;
-                System.out.println("cli_codigo: "+cli_codigo);
+                System.out.println("cli_codigo: " + cli_codigo);
             }
             i++;
         }
@@ -177,7 +177,7 @@ public final class cad_servico extends javax.swing.JFrame {
             model.addElement(combo);
             if (tps_codigo == lista_tipo_servico.get(i).getTps_codigo()) {
                 obj = combo;
-                System.out.println("tps_codigo: "+tps_codigo);
+                System.out.println("tps_codigo: " + tps_codigo);
             }
             i++;
         }
@@ -202,8 +202,8 @@ public final class cad_servico extends javax.swing.JFrame {
             model.addElement(combo);
             if (tpprod_codigo == lista_tipo_produto.get(i).getTpprod_codigo()) {
                 obj = combo;
-                
-                System.out.println("tpprod_codigo: "+tpprod_codigo);
+
+                System.out.println("tpprod_codigo: " + tpprod_codigo);
             }
             i++;
         }
@@ -227,7 +227,7 @@ public final class cad_servico extends javax.swing.JFrame {
             model.addElement(combo);
             if (tpp_codigo == lista_tipo_pagamento.get(i).getTpp_codigo()) {
                 obj = combo;
-                System.out.println("tpp_codigo: "+tpp_codigo);
+                System.out.println("tpp_codigo: " + tpp_codigo);
             }
             i++;
         }
@@ -520,24 +520,33 @@ public final class cad_servico extends javax.swing.JFrame {
         //Cria objeto para transferir pro controller
         ServicoClass SERVICOMODELO = new ServicoClass();
 
-        if (!cli_descricao_combo.getSelectedItem().toString().isEmpty()) {
+        if (cli_descricao_combo.getSelectedItem() != null) {
             SERVICOMODELO.setCli_codigo(parseInt(((ComboItem) item_cli_descricao).getValue()));
-        }
-        if (!tps_descricao_combo.getSelectedItem().toString().isEmpty()) {
-            
-            SERVICOMODELO.setTps_codigo(parseInt(((ComboItem) item_tps_descricao).getValue()));
-        } else {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        }else {
+            JOptionPane.showMessageDialog(null, "O campo Cliente eve ser preenchido", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!tpprod_descricao_combo.getSelectedItem().toString().isEmpty()) {
+        if (tps_descricao_combo.getSelectedItem() != null) {
+
+            SERVICOMODELO.setTps_codigo(parseInt(((ComboItem) item_tps_descricao).getValue()));
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo serviço deve ser preenchido", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (tpprod_descricao_combo.getSelectedItem() != null) {
             SERVICOMODELO.setTpprod_codigo(parseInt(((ComboItem) item_tpprod_descricao).getValue()));
         }
-        if (!tpp_descricao_combo.getSelectedItem().toString().isEmpty()) {
+        if (tpp_descricao_combo.getSelectedItem() != null) {
             SERVICOMODELO.setTpp_codigo(parseInt(((ComboItem) item_tpp_descricao).getValue()));
         }
 
-        SERVICOMODELO.setSer_dataentrada(ser_dataentrada.getText());
+        if (!ser_dataentrada.getText().isEmpty()) {
+
+            SERVICOMODELO.setSer_dataentrada(ser_dataentrada.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo data de entrada deve ser preenchido", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         SERVICOMODELO.setSer_datapagamento(ser_datapagamento.getText());
         SERVICOMODELO.setSer_datasaida(ser_datasaida.getText());
         SERVICOMODELO.setSer_marca(ser_marca.getText());
