@@ -116,11 +116,9 @@ public class cad_tipo_pagamento extends javax.swing.JFrame {
 
             TPPC.setTpp_descricao(jTextField1.getText());
             if (this.TPPC.getTpp_codigo() > 0) {
-                System.out.println(this.TPPC.getTpp_codigo());
                 TPPC.setTpp_codigo(this.TPPC.getTpp_codigo());
             }
 
-            System.out.println(TPPC.getTpp_descricao());
             controller.salvar(TPPC);
             //jTextField1.setText("");
             this.consTPP.listarTabela();

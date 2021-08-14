@@ -9,18 +9,9 @@
             <Property name="text" type="java.lang.String" value="SERVI&#xc7;O"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="MenuNovoServico">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="NOVO"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuNovoServicoMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuNovoServicoActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="MenuPesquisaServico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="PESQUISAR SERVI&#xc7;O"/>
+                <Property name="text" type="java.lang.String" value="SERVI&#xc7;OS"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuPesquisaServicoActionPerformed"/>
@@ -71,7 +62,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="DASHBOARD"/>
   </Properties>
   <SyntheticProperties>

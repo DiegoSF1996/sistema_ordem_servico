@@ -35,7 +35,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuServico = new javax.swing.JMenu();
-        MenuNovoServico = new javax.swing.JMenuItem();
         MenuPesquisaServico = new javax.swing.JMenuItem();
         MenuAdministrativo = new javax.swing.JMenu();
         MenuClientes = new javax.swing.JMenuItem();
@@ -43,7 +42,7 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DASHBOARD");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -53,20 +52,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         MenuServico.setText("SERVIÇO");
 
-        MenuNovoServico.setText("NOVO");
-        MenuNovoServico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MenuNovoServicoMouseClicked(evt);
-            }
-        });
-        MenuNovoServico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuNovoServicoActionPerformed(evt);
-            }
-        });
-        MenuServico.add(MenuNovoServico);
-
-        MenuPesquisaServico.setText("PESQUISAR SERVIÇO");
+        MenuPesquisaServico.setText("SERVIÇOS");
         MenuPesquisaServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenuPesquisaServicoActionPerformed(evt);
@@ -144,8 +130,12 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void MenuPesquisaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuPesquisaServicoActionPerformed
         // TODO add your handling code here:
-        cons_servico cons_servico ;
-        cons_servico = new cons_servico();
+        cons_servico cons_servico = null ;
+        try {
+            cons_servico = new cons_servico();
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cons_servico.setVisible(true);
     }//GEN-LAST:event_MenuPesquisaServicoActionPerformed
 
@@ -156,28 +146,6 @@ public class Dashboard extends javax.swing.JFrame {
         login.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
-
-    private void MenuNovoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuNovoServicoActionPerformed
-        cad_servico cad_servico = null;
-        try {
-            cad_servico = new cad_servico();
-            cad_servico.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuNovoServicoActionPerformed
-
-    private void MenuNovoServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuNovoServicoMouseClicked
-        // TODO add your handling code here:
-        cad_servico cad_servico = null;
-        try {
-            cad_servico = new cad_servico();
-            cad_servico.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_MenuNovoServicoMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
@@ -255,7 +223,6 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdministrativo;
     private javax.swing.JMenuItem MenuClientes;
-    private javax.swing.JMenuItem MenuNovoServico;
     private javax.swing.JMenuItem MenuPesquisaServico;
     private javax.swing.JMenu MenuServico;
     private javax.swing.JMenuItem MenuTipoServico;

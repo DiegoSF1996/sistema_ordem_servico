@@ -120,7 +120,6 @@ public class cad_tipo_produto extends javax.swing.JFrame {
             TipoProdutoClass TPPRODC = new TipoProdutoClass();
             TPPRODC.setTpprod_descricao(jTextField1.getText());
             if (this.TPPRODC.getTpprod_codigo() > 0) {
-                System.out.println(this.TPPRODC.getTpprod_codigo());
                 TPPRODC.setTpprod_codigo(this.TPPRODC.getTpprod_codigo());
             }
             controller.salvar(TPPRODC);

@@ -117,7 +117,6 @@ public class cad_tipo_servico extends javax.swing.JFrame {
 
             TPSC.setTps_descricao(jTextField1.getText());
             if (this.TPSC.getTps_codigo() > 0) {
-                System.out.println(this.TPSC.getTps_codigo());
                 TPSC.setTps_codigo(this.TPSC.getTps_codigo());
             }
             controller.salvar(TPSC);

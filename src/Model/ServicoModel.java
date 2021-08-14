@@ -73,7 +73,6 @@ public class ServicoModel {
         if (SERVICLASS.getSer_externo() != null) {
             pstmt.setBoolean(13, SERVICLASS.getSer_externo());
         }
-        System.out.println(SERVICLASS.getTps_codigo());
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
         if (registros == 1) {
@@ -162,7 +161,6 @@ public class ServicoModel {
 
             query += " where ser_codigo = " + SERVICLASS.getSer_codigo();
         }
-         System.out.println(query);
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
         int registros = pstmt.executeUpdate();
         pstmt.close();// fecha a db
@@ -184,7 +182,6 @@ public class ServicoModel {
             query = query + " and cli.cli_descricao like '%" + SERVICLASS.getCli_descricao()+"%'";
         }
         query = query + " ORDER BY serv.ser_codigo DESC ";
-        System.out.println(query);
         PreparedStatement pstmt = db.getConexao().prepareStatement(query);
 
         ResultSet rs = pstmt.executeQuery();
@@ -229,8 +226,17 @@ public class ServicoModel {
 
     public ServicoClass obterPorPk(ServicoClass SERVICLASS) throws SQLException {
 
-        String query = "select * from " + table + " where 1=1 ";
-        if (SERVICLASS.getCli_codigo() != 0) {
+        String query = "select servico.*,cliente.cli_descricao, cliente.cli_pj,"
+                + " tipo_servico.tps_descricao, "
+                + "tipo_pagamento.tpp_descricao, tipo_produto.tpprod_descricao"
+                + " from " + table 
+                + " JOIN cliente on servico.cli_codigo = cliente.cli_codigo "
+                + " JOIN tipo_servico on tipo_servico.tps_codigo = servico.tps_codigo"
+                + " JOIN tipo_pagamento on tipo_pagamento.tpp_codigo = servico.tpp_codigo"
+                + " JOIN tipo_produto on tipo_produto.tpprod_codigo = servico.tpprod_codigo";
+        
+         query +=" where 1=1 "; 
+        if (SERVICLASS.getSer_codigo() != 0) {
             query = query + " and ser_codigo = " + SERVICLASS.getSer_codigo();
         }
 
@@ -243,6 +249,7 @@ public class ServicoModel {
             TPPSalvar.setCli_codigo(rs.getInt("cli_codigo"));
             TPPSalvar.setTps_codigo(rs.getInt("tps_codigo"));
             TPPSalvar.setTpp_codigo(rs.getInt("tpp_codigo"));
+            TPPSalvar.setTpprod_codigo(rs.getInt("tpprod_codigo"));
             TPPSalvar.setSer_marca(rs.getString("ser_marca"));
             TPPSalvar.setSer_numeroserie(rs.getString("ser_numeroserie"));
             TPPSalvar.setSer_modelo(rs.getString("ser_modelo"));
@@ -251,10 +258,13 @@ public class ServicoModel {
             TPPSalvar.setSer_datapagamento(rs.getString("ser_datapagamento"));
             TPPSalvar.setSer_valorpagamento(rs.getFloat("ser_valorpagamento"));
             TPPSalvar.setSer_externo(rs.getBoolean("ser_externo"));
-            
-            System.out.println("adasdsadasdasdasdasdsad " +rs.getInt("ser_externo"));
             TPPSalvar.setSer_observacao(rs.getString("ser_observacao"));
-            TPPSalvar.setTpprod_codigo(rs.getInt("tpprod_codigo"));
+            
+            TPPSalvar.setCli_descricao(rs.getString("cli_descricao"));
+            TPPSalvar.setCli_pj(rs.getBoolean("cli_pj"));
+            TPPSalvar.setTpp_descricao(rs.getString("tpp_descricao"));
+            TPPSalvar.setTps_descricao(rs.getString("tps_descricao"));
+            TPPSalvar.setTpprod_descricao(rs.getString("tpprod_descricao"));
             ASERVICLASS.add(TPPSalvar);
 
         }

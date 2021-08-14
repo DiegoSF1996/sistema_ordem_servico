@@ -11,6 +11,8 @@ import Controller.TipoServicoController;
 import classes.ClienteClass;
 import classes.ServicoClass;
 import classes.TipoServicoClass;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
 import helpers.ComboItem;
 import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
@@ -32,11 +34,15 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPTableHeader;
+import com.itextpdf.text.pdf.PdfPage;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import helpers.FileChooserTest;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -124,6 +130,7 @@ public class cons_servico extends javax.swing.JFrame {
         tableModel.setNumRows(0);
         List<ServicoClass> list = controller.listarServico(ServicoClass);
         for (ServicoClass serv : list) {
+            System.out.println(serv.getSer_codigo());
             tableModel.addRow(new Object[]{serv.getSer_codigo(),
                 serv.getCli_descricao(),
                 serv.getSer_marca(),
@@ -154,6 +161,7 @@ public class cons_servico extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CONSULTA SERVIÇO");
@@ -229,31 +237,42 @@ public class cons_servico extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("NOVO");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(cli_descricao_combo)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(tipo_cliente_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(tps_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(cli_descricao_combo)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(tipo_cliente_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(tps_descricao_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
         );
@@ -280,7 +299,8 @@ public class cons_servico extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -324,10 +344,10 @@ public class cons_servico extends javax.swing.JFrame {
 
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         int i = jTable1.getSelectedRow();
-
         if (i >= 0) {
             ServicoClass SERVCLASS = new ServicoClass();
             SERVCLASS.setSer_codigo((int) tableModel.getValueAt(i, 0));
+
             cad_servico cadSer = null;
             try {
                 cadSer = new cad_servico(SERVCLASS, this);
@@ -367,73 +387,138 @@ public class cons_servico extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        String filename = null, dir = null;
-        JFileChooser c = new JFileChooser();
-        // Demonstrate "Open" dialog:
-        int rVal = c.showSaveDialog(cons_servico.this);
-        if (rVal == JFileChooser.APPROVE_OPTION) {
-            filename = c.getSelectedFile().getName();
-            if (!filename.endsWith(".pdf")) {
-                filename += ".pdf";
-            }
-            dir = c.getCurrentDirectory().toString();
-        }
-        if (rVal == JFileChooser.CANCEL_OPTION) {
-            filename = null;
-            dir = null;
-        }
-        Document doc = new Document();
-        doc.setPageSize(PageSize.A4);
-        doc.addSubject("");
-        doc.addKeywords("Ordem de seriço");
-        doc.addCreator("Ordem de seriço");
-        doc.addAuthor("Admin");
-        if (filename != null && dir != null) {
+        //Pega os dados
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        int i = jTable1.getSelectedRow();
+        if (i >= 0) {
+            ServicoClass SERVCLASS = new ServicoClass();
+            SERVCLASS.setSer_codigo((int) tableModel.getValueAt(i, 0));
 
+            ServicoController oServCon = new ServicoController();
             try {
-                PdfWriter.getInstance(doc, new FileOutputStream(dir + "\\" + filename));
-                doc.open();
+                SERVCLASS = oServCon.obterPorPk(SERVCLASS);
+            } catch (SQLException ex) {
+                Logger.getLogger(cons_servico.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-                Paragraph p = new Paragraph("ORDEM DE SERVIÇO");
-                p.setAlignment(1);
-                p.setPaddingTop(60);
-                doc.add(p);
-                
-                doc.add(new Paragraph("NOME"));
-                doc.add(new Paragraph("DIEGO"));
-                doc.add(new Paragraph(""));
-                doc.add(new Paragraph("TIPO SERVIÇO"));
-                doc.add(new Paragraph("MANUTENÇÃO PREVENTIVA"));
-                doc.add(new Paragraph(""));
-                doc.add(new Paragraph("TIPO APARELHO"));
-                doc.add(new Paragraph("TV"));
-                PdfPTable table = new PdfPTable(3);
-                PdfPCell cell1 = new PdfPCell(new Paragraph("RG"));
-                PdfPCell cell2 = new PdfPCell(new Paragraph("Nome"));
-                PdfPCell cell3 = new PdfPCell(new Paragraph("Idade"));
+            String filename = null, dir = null;
+            JFileChooser c = new JFileChooser();
+            // Demonstrate "Open" dialog:
+            int rVal = c.showSaveDialog(cons_servico.this);
+            if (rVal == JFileChooser.APPROVE_OPTION) {
+                filename = c.getSelectedFile().getName();
+                if (!filename.endsWith(".pdf")) {
+                    filename += ".pdf";
+                }
+                dir = c.getCurrentDirectory().toString();
+            }
+            if (rVal == JFileChooser.CANCEL_OPTION) {
+                filename = null;
+                dir = null;
+            }
+            Document doc = new Document();
+            doc.setPageSize(PageSize.A4);
+            doc.addSubject("");
+            doc.addKeywords("Ordem de seriço");
+            doc.addCreator("Ordem de seriço");
+            doc.addAuthor("Admin");
+            if (filename != null && dir != null) {
 
-                table.addCell(cell1);
-                table.addCell(cell2);
-                table.addCell(cell3);
+                try {
+                    PdfWriter.getInstance(doc, new FileOutputStream(dir + "\\" + filename));
+                    doc.open();
+                    doc.add(new Paragraph( new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
 
-                cell1 = new PdfPCell(new Paragraph("1207591955"));
-                cell2 = new PdfPCell(new Paragraph("Diego"));
-                cell3 = new PdfPCell(new Paragraph("25"));
-                table.addCell(cell1);
-                table.addCell(cell2);
-                table.addCell(cell3);
+                    Paragraph p = new Paragraph("ORDEM DE SERVIÇO");
+                    Chapter chapter1 = new Chapter(p, 1);
+                    p.setAlignment(1);
+                    p.setPaddingTop(60);
+                    doc.add(p);
 
-                doc.add(table);
-                doc.close();
-                Desktop.getDesktop().open(new File(dir + "\\" + filename));
-            } catch (DocumentException de) {
-                System.err.println(de.getMessage());
-            } catch (IOException ioe) {
-                System.err.println(ioe.getMessage());
+                    LineSeparator ls = new LineSeparator();
+                    doc.add(new Chunk(ls));
+
+                    PdfPTable tablee = new PdfPTable(1);
+                    tablee.setWidthPercentage(100);
+                    tablee.setSpacingAfter(6);
+                    tablee.setSpacingBefore(6);
+                    PdfPCell cell11 = new PdfPCell(new Paragraph("INFORMAÇÕES DO CLIENTE"));
+                    tablee.addCell(cell11);
+                    doc.add(tablee);
+
+                    doc.add(new Paragraph("Nome: " + SERVCLASS.getCli_descricao()));
+                    doc.add(new Paragraph("Tipo de Cliente: " + (SERVCLASS.getCli_pj() == true ? "PJ" : "PF")));
+                    //----
+                    tablee.deleteLastRow();
+                    cell11 = new PdfPCell(new Paragraph("INFORMAÇÕES DO PRODUTO"));
+                    tablee.addCell(cell11);
+                    doc.add(tablee);
+                    doc.add(new Paragraph("Tipo Aparelho: " + SERVCLASS.getTpprod_descricao()));
+                    doc.add(new Paragraph("Modelo: " + SERVCLASS.getSer_modelo()));
+                    doc.add(new Paragraph("Marca: " + SERVCLASS.getSer_marca()));
+                    doc.add(new Paragraph("Número de Série: " + SERVCLASS.getSer_numeroserie()));
+                    //----
+                    tablee.deleteLastRow();
+                    cell11 = new PdfPCell(new Paragraph("INFORMAÇÕES DO SERVIÇO"));
+                    tablee.addCell(cell11);
+                    doc.add(tablee);
+                    doc.add(new Paragraph("Serviço Externo: " + (SERVCLASS.getSer_externo() == true ? "SIM" : "Não")));
+                    doc.add(new Paragraph("Tipo Serviço: " + SERVCLASS.getTps_descricao()));
+                    doc.add(new Paragraph("Data de Entrada: " + SERVCLASS.getSer_dataentrada()));
+                    doc.add(new Paragraph("Data de Saída: " + SERVCLASS.getSer_datasaida()));
+                    doc.add(new Paragraph("Observação: " + SERVCLASS.getSer_observacao()));
+                    //----
+                    tablee.deleteLastRow();
+                    cell11 = new PdfPCell(new Paragraph("INFORMAÇÕES DE PAGAMENTO"));
+                    tablee.addCell(cell11);
+                    doc.add(tablee);
+
+                    doc.add(new Paragraph("Tipo Pagamento: " + SERVCLASS.getTpp_descricao()));
+
+                    doc.add(new Paragraph("Valor Pagamento: " + SERVCLASS.getSer_valorpagamento()));
+
+                    doc.add(new Paragraph("Data Pagamento: " + SERVCLASS.getSer_datapagamento()));
+
+                    /* PdfPTable table = new PdfPTable(3);
+                    PdfPCell cell1 = new PdfPCell(new Paragraph("RG"));
+                    PdfPCell cell2 = new PdfPCell(new Paragraph("Nome"));
+                    PdfPCell cell3 = new PdfPCell(new Paragraph("Idade"));
+
+                    table.addCell(cell1);
+                    table.addCell(cell2);
+                    table.addCell(cell3);
+
+                    cell1 = new PdfPCell(new Paragraph("1207591955"));
+                    cell2 = new PdfPCell(new Paragraph("Diego"));
+                    cell3 = new PdfPCell(new Paragraph("25"));
+                    table.addCell(cell1);
+                    table.addCell(cell2);
+                    table.addCell(cell3);
+
+                    doc.add(table); */
+                    
+                    
+                    doc.close();
+                    Desktop.getDesktop().open(new File(dir + "\\" + filename));
+                } catch (DocumentException de) {
+                    System.err.println(de.getMessage());
+                } catch (IOException ioe) {
+                    System.err.println(ioe.getMessage());
+                }
             }
         }
-
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        cad_servico cad_servico = null;
+        try {
+            cad_servico = new cad_servico();
+            cad_servico.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,6 +565,7 @@ public class cons_servico extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

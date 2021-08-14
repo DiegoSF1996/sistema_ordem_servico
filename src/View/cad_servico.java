@@ -80,7 +80,6 @@ public final class cad_servico extends javax.swing.JFrame {
         ser_datasaida.setText(oServico.getSer_datasaida());
         ser_datapagamento.setText(oServico.getSer_datapagamento());
         ser_valorpagamento.setText(Float.toString(oServico.getSer_valorpagamento()));
-        System.out.println("adsadsadasdas " + oServico.getSer_externo());
         boolean estado_checkbox = false;
         if (oServico.getSer_externo() == true) {
             estado_checkbox = true;
@@ -153,7 +152,6 @@ public final class cad_servico extends javax.swing.JFrame {
             if (cli_codigo == lista_cliente.get(i).getCli_codigo()) {
                 //model.setSelectedItem(combo);
                 obj = combo;
-                System.out.println("cli_codigo: " + cli_codigo);
             }
             i++;
         }
@@ -177,7 +175,6 @@ public final class cad_servico extends javax.swing.JFrame {
             model.addElement(combo);
             if (tps_codigo == lista_tipo_servico.get(i).getTps_codigo()) {
                 obj = combo;
-                System.out.println("tps_codigo: " + tps_codigo);
             }
             i++;
         }
@@ -203,7 +200,6 @@ public final class cad_servico extends javax.swing.JFrame {
             if (tpprod_codigo == lista_tipo_produto.get(i).getTpprod_codigo()) {
                 obj = combo;
 
-                System.out.println("tpprod_codigo: " + tpprod_codigo);
             }
             i++;
         }
@@ -227,7 +223,6 @@ public final class cad_servico extends javax.swing.JFrame {
             model.addElement(combo);
             if (tpp_codigo == lista_tipo_pagamento.get(i).getTpp_codigo()) {
                 obj = combo;
-                System.out.println("tpp_codigo: " + tpp_codigo);
             }
             i++;
         }

@@ -29,7 +29,10 @@ public final class ServicoClass {
     private String ser_datasaida;
     private String ser_datapagamento;
     private String cli_descricao;
-
+    private Boolean cli_pj;
+    private String tps_descricao;
+    private String tpp_descricao;
+    private String tpprod_descricao;
     private Date ser_dataentrada_formatada;
     private Date ser_datasaida_formatada;
     private Date ser_datapagamento_formatada;
@@ -214,4 +217,37 @@ public final class ServicoClass {
     public void setCli_descricao(String cli_descricao) {
         this.cli_descricao = cli_descricao;
     }
+
+    public String getTps_descricao() {
+        return tps_descricao;
+    }
+
+    public void setTps_descricao(String tps_descricao) {
+        this.tps_descricao = tps_descricao;
+    }
+
+    public String getTpp_descricao() {
+        return tpp_descricao;
+    }
+
+    public void setTpp_descricao(String tpp_descricao) {
+        this.tpp_descricao = tpp_descricao;
+    }
+
+    public String getTpprod_descricao() {
+        return tpprod_descricao;
+    }
+
+    public void setTpprod_descricao(String tpprod_descricao) {
+        this.tpprod_descricao = tpprod_descricao;
+    }
+
+    public Boolean getCli_pj() {
+        return cli_pj;
+    }
+
+    public void setCli_pj(Boolean cli_pj) {
+        this.cli_pj = cli_pj;
+    }
+    
 }

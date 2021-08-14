@@ -290,7 +290,6 @@ public class cad_cliente extends javax.swing.JFrame {
             } else {
                 CC.setCli_pj(false);
             }
-            System.out.println("checkbo " + cli_pj.isSelected() + " var: " + CC.getCli_pj());
             if (this.CC.getCli_codigo() > 0) {
                 CC.setCli_codigo(this.CC.getCli_codigo());
             }
