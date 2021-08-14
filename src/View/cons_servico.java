@@ -41,6 +41,7 @@ import helpers.FileChooserTest;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JButton;
@@ -406,11 +407,23 @@ public class cons_servico extends javax.swing.JFrame {
             // Demonstrate "Open" dialog:
             int rVal = c.showSaveDialog(cons_servico.this);
             if (rVal == JFileChooser.APPROVE_OPTION) {
+
                 filename = c.getSelectedFile().getName();
                 if (!filename.endsWith(".pdf")) {
                     filename += ".pdf";
                 }
                 dir = c.getCurrentDirectory().toString();
+
+                File f = new File(dir + "\\" + filename);
+                if (f.exists() && !f.isDirectory()) {
+                    JOptionPane.showMessageDialog(null, "Já existe um arquivo com esse nome!", "Atenção", JOptionPane.OK_OPTION);
+                    
+                    /* Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    filename = filename.split(".")[0];
+                    filename += "_" + timestamp.getTime() + ".pdf"; */
+                    filename = null;
+                    dir = null;
+                }
             }
             if (rVal == JFileChooser.CANCEL_OPTION) {
                 filename = null;
@@ -425,9 +438,10 @@ public class cons_servico extends javax.swing.JFrame {
             if (filename != null && dir != null) {
 
                 try {
+
                     PdfWriter.getInstance(doc, new FileOutputStream(dir + "\\" + filename));
                     doc.open();
-                    doc.add(new Paragraph( new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
+                    doc.add(new Paragraph(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis()))));
 
                     Paragraph p = new Paragraph("ORDEM DE SERVIÇO");
                     Chapter chapter1 = new Chapter(p, 1);
@@ -496,8 +510,6 @@ public class cons_servico extends javax.swing.JFrame {
                     table.addCell(cell3);
 
                     doc.add(table); */
-                    
-                    
                     doc.close();
                     Desktop.getDesktop().open(new File(dir + "\\" + filename));
                 } catch (DocumentException de) {

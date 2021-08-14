@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,7 +25,7 @@ public class DB {
 
             Class.forName("org.sqlite.JDBC");
             
-            String url = "jdbc:sqlite:db/ordem_servico.db";
+            String url = "jdbc:sqlite:"+ Paths.get(".").toAbsolutePath().normalize().toString()+"\\db\\ordem_servico.db";
 
             conexao = DriverManager.getConnection(url);
             System.out.println("conexao ok");
@@ -31,7 +33,7 @@ public class DB {
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null,
-                    "Ocorreu um erro de conexão. Verifique a Base de Dados indicada !" + "\n" + erro.getMessage(), "Conexão", 3);
+                    "Ocorreu um erro de conexão. Verifique a Base de Dados indicada !" + "\n" + erro.getMessage() , "Conexão", 3);
             erro.printStackTrace();
         }
 
